@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicare POS</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+</head>
+
+<body>
+    <!-- =========== NAVBAR ========== -->
+
+    
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light " style="background-color:rgb(0, 192,192);">
+            <a class="navbar-brand" href="index.html" style="color: white"> <B> MEDICARE CHEMICALS</B></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html"> <i class="fas fa-home"></i> <b> Home </b></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="history.html"> <i class="fas fa-history"></i><b> History </b></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="about.html"><i class="far fa-address-card"></i><b> About </b></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"> <i class="fas fa-sign-out-alt"></i> <b> Log Out </b> </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+
+    <br>
+    <br>
+
+    
+    <div class="container">
+        <div class="row">
+            <!-- ============ SORT HISTORY ========= -->
+            <div class="col-md-3">
+                <h2>Sort by: </h2>
+                <div class="container">
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <div class="btn-group" role="group">
+                          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Select Date
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Days</a>
+                            <a class="dropdown-item" href="#">Months</a>
+                            <a class="dropdown-item" href="#">Years</a>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <br>
+                From: <input id="sortinput" type="text" placeholder="00/00/0000"> 
+                <br> 
+                <br>
+                To: <input id="sortinput" type="text"  placeholder="00/00/0000"> 
+                <br> 
+                <br>
+                <button type="submit" class="btn btn-primary" style="background-color: rgb(0, 192,192)" >Search</button>
+
+            </div>
+
+            <!-- ============ ITEM HISTORY TABLE ========= -->
+            <div class="col-md-9">
+                <table id="itemtable">
+                    <tr id="itemtr">
+                        <th> Date </th>
+                        <th> User Name </th>
+                        <th> Items Sold </th>
+                        <th> Quantity </th>
+                        <th> Unit price</th>
+                        <th> Total Price </th>
+                        <th>Total Sales</th>
+                    </tr>
+                    <tr id="itemtr">
+                        <td id="itemtd"> <a id="idlink" href="#"> 03/21/2020 </a></td>
+                        <td id="itemtd"> Prince </td>
+                        <td id="itemtd"> <ol><li> Paracetamol </li> <li>Qwick Action</li> <li>Bluffin</li> <li>Hand Gel</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 5 </li> <li> 6 </li> <li>4</li><li>7</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 4.00 </li> <li> 3.00 </li><li>1.50</li><li>28.00</li></ol> </td>
+                        <td id="itemtd"> <ol><li> 20.00 </li> <li>12.00</li> <li>2.25</li><li>70.0</li></ol></td>
+                        <td><b>Ghc 900.00</b> </td>
+                    </tr>
+                    
+                    <tr id="itemtr">
+                        <td id="itemtd"> <a id="idlink" href="#"> 03/04/2020 </a></td>
+                        <td id="itemtd"> Admin </td>
+                        <td id="itemtd"> <ol><li> Paracetamol </li> <li>Qwick Action</li> <li>Bluffin</li> <li>Hand Gel</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 5 </li> <li> 6 </li> <li>4</li><li>7</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 4.00 </li> <li> 3.00 </li><li>1.50</li><li>28.00</li></ol> </td>
+                        <td id="itemtd"> <ol><li> 20.00 </li> <li>12.00</li> <li>2.25</li><li>70.0</li></ol></td>
+                        <td><b>Ghc 750.00</b> </td>
+                    </tr>
+                    <tr id="itemtr">
+                        <td id="itemtd"> <a id="idlink" href="#"> 03/21/2020 </a></td>
+                        <td id="itemtd"> Username </td>
+                        <td id="itemtd"> <ol><li> Paracetamol </li> <li>Qwick Action</li> <li>Bluffin</li> <li>Hand Gel</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 5 </li> <li> 6 </li> <li>4</li><li>7</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 4.00 </li> <li> 3.00 </li><li>1.50</li><li>28.00</li></ol> </td>
+                        <td id="itemtd"> <ol><li> 20.00 </li> <li>12.00</li> <li>2.25</li><li>70.0</li></ol></td>
+                        <td><b>Ghc 1000.00</b> </td>
+                    </tr>
+                    <tr id="itemtr">
+                        <td id="itemtd"> <a id="idlink" href="#"> 12/31/2020 </a></td>
+                        <td id="itemtd"> Joe </td>
+                        <td id="itemtd"> <ol><li> Paracetamol </li> <li>Qwick Action</li> <li>Bluffin</li> <li>Hand Gel</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 5 </li> <li> 6 </li> <li>4</li><li>7</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 4.00 </li> <li> 3.00 </li><li>1.50</li><li>28.00</li></ol> </td>
+                        <td id="itemtd"> <ol><li> 20.00 </li> <li>12.00</li> <li>2.25</li><li>70.0</li></ol></td>
+                        <td><b>Ghc 790.00</b> </td>
+                    </tr>
+                    <tr id="itemtr">
+                        <td id="itemtd"> <a id="idlink" href="#"> 01/25/2020 </a></td>
+                        <td id="itemtd"> Mark </td>
+                        <td id="itemtd"> <ol><li> Paracetamol </li> <li>Qwick Action</li> <li>Bluffin</li> <li>Hand Gel</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 5 </li> <li> 6 </li> <li>4</li><li>7</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 4.00 </li> <li> 3.00 </li><li>1.50</li><li>28.00</li></ol> </td>
+                        <td id="itemtd"> <ol><li> 20.00 </li> <li>12.00</li> <li>2.25</li><li>70.0</li></ol></td>
+                        <td><b>Ghc 570.70</b> </td>
+                    </tr>
+                    <tr id="itemtr">
+                        <td id="itemtd"> <a id="idlink" href="#"> 04/03/2020 </a></td>
+                        <td id="itemtd"> Admin </td>
+                        <td id="itemtd"> <ol><li> Paracetamol </li> <li>Qwick Action</li> <li>Bluffin</li> <li>Hand Gel</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 5 </li> <li> 6 </li> <li>4</li><li>7</li> </ol> </td>
+                        <td id="itemtd"> <ol><li> 4.00 </li> <li> 3.00 </li><li>1.50</li><li>28.00</li></ol> </td>
+                        <td id="itemtd"> <ol><li> 20.00 </li> <li>12.00</li> <li>2.25</li><li>70.0</li></ol></td>
+                        <td><b>Ghc 7600.00</b> </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <script src="js/fontawesome.min.js" crossorigin="anonymous"></script>
+    <script src="js/all.min.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-slim.min.js" crossorigin="anonymous"></script>
+    <script src="js/popper.min.js" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
