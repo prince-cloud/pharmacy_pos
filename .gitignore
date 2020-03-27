@@ -10,7 +10,8 @@ media/*
 .vscode/
 .vscode
 .vscode/*
-
+*/migrations/
+migrations/
 # Backup files # 
 *.bak 
 

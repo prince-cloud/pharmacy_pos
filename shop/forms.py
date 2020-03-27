@@ -18,9 +18,11 @@ class ProductForm(forms.ModelForm):
         fields  = ('name', 'price', 'image')
 
 
-CHOICES = list([(str(product.id), str(product)) for product in Product.objects.all()])
-CHOICES.insert(0, (-1,'NONE'))
 class ProductPurchaseForm(forms.Form):
-    
+    try:
+        CHOICES = list([(str(product.id), str(product)) for product in Product.objects.all()])
+        CHOICES.insert(0, (-1,'NONE'))
+    except Exception:
+        CHOICES = [(-1, 'NONE')]
     product = forms.ChoiceField(choices = CHOICES)
     quantity = forms.CharField(widget=forms.NumberInput())
