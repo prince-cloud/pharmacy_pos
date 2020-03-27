@@ -19,10 +19,17 @@ class ProductForm(forms.ModelForm):
 
 
 class ProductPurchaseForm(forms.Form):
-    try:
-        CHOICES = list([(str(product.id), str(product)) for product in Product.objects.all()])
-        CHOICES.insert(0, (-1,'NONE'))
-    except Exception:
-        CHOICES = [(-1, 'NONE')]
-    product = forms.ChoiceField(choices = CHOICES)
+    
+    
+    product = forms.ChoiceField(choices = ())
     quantity = forms.CharField(widget=forms.NumberInput())
+
+    def __init__(self, *args, **kwargs):
+        super(ProductPurchaseForm, self).__init__(*args, **kwargs)
+        try:
+            CHOICES = list([(str(product.id), str(product)) for product in Product.objects.all()])
+            CHOICES.insert(0, (-1,'NONE'))
+        except Exception as e:
+            print('\n\n', e, '\n\n')
+            CHOICES = [(-1, 'NONE')]
+        self.fields['product'].choices = CHOICES
