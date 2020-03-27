@@ -1,4 +1,61 @@
 
+.bg-gray{
+  background: #999;
+}
+
+.r-5 {
+  border-radius: 5px;
+}
+.full-screen{
+  min-height: 100vh;
+}
+.myoverlay{
+  position: fixed;
+  display: none;
+  transition: display 0.5s;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+  background: linear-gradient(blue, lime);
+ 
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  30%{
+    transform: rotate(40deg);
+  }
+  60%{
+    transform: rotate(-40deg);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.myoverlay.show{
+  display: flex;
+  animation: 1s ease-in-out show;
+}
+.navbar .nav-item {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.myclose {
+  position: absolute;
+  top: 20px;
+  right: 10%;
+  color: white;
+ 
+
+}
+
 /* login form */
 #loginform{
     width: 50%;
@@ -60,13 +117,13 @@ td, th {
 
     /* navbar items */
     .nav-item{
-        width: 100px;
         text-align: center;
     }
-  .nav-item:hover{
-    background-color: white;
-    color: rgb(0, 192, 192);
-    width: 100px;
+  .nav-link:hover{
+    box-shadow: 0px 0px 4px rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    
   }
 
   #input{
