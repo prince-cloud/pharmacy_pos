@@ -47,11 +47,17 @@
                             <a class="nav-link" id="add-product-link"> <i class="fas fa-plus"></i> <b>
                                     Add Product </b></a>
                         </li>
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item active">
-                            <a class="nav-link btn" href="supplyhistory.html"> <i class="fas fa-history"></i><b> History
+                            <a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> <b> Log Out </b> </a>
+                        </li>
+                        {% else %}
+                        
+                        <li class="nav-item active">
+                            <a class="nav-link btn" href="{% url 'login' %}"> <i class="fas fa-sign-in-alt"></i><b> Log In
                                 </b></a>
                         </li>
-
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -63,48 +69,12 @@
 
 
 
-    <div class="container">
+    
         {% block content %}
         {% endblock %}
 
-    </div>
-    <div class="myoverlay full-screen" id="add-product-view">
-        <i class="myclose">x</i>
-        <div class="container">
-            {% include 'add_product.html' %}
-        </div>
-    </div>
-
-    <div class="myoverlay full-screen" id="add-purchase-view">
-        <i class="myclose">x</i>
-        <div class="container">
-            {% include 'add_purchase.html' %}
-        </div>
-    </div>
-
-    <div class="myoverlay full-screen" id="add-supply-view">
-        <i class="myclose btn btn-danger">x</i>
-        <div class="container">
-            {% include 'add_supply.html' %}
-        </div>
-    </div>
-    <script>
-        document.querySelector("#add-supply-link").addEventListener("click", function (e) {
-            document.querySelector("#add-supply-view").classList.toggle("show");
-        });
-        document.querySelector("#add-product-link").addEventListener("click", function (e) {
-            document.querySelector("#add-product-view").classList.toggle("show");
-        });
-        document.querySelector("#add-purchase-link").addEventListener("click", function (e) {
-            document.querySelector("#add-purchase-view").classList.toggle("show");
-        });
-        let closes = document.getElementsByClassName("myclose");
-        for (let i = 0; i < closes.length; i++) {
-            closes[i].addEventListener('click', function (e) {
-                this.parentNode.classList.toggle("show");
-            });
-        }
-    </script>
+   
+    
     <script src="{% static 'js/fontawesome.min.js' %}"></script>
     <script src="{% static 'js/all.min.js' %}"></script>
     <script src="{% static 'js/jquery-slim.min.js' %}"></script>

@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Purchase, ItemPurchase
 from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 import json
 # Create your views here.
-
+@login_required
 def add_product(request):
     if request.method == "POST":
         form = ProductForm(data=request.POST, files=request.FILES)
@@ -14,11 +15,9 @@ def add_product(request):
             redirect_url = request.GET.get("next")
             if redirect_url is not None:
                 redirect(redirect_url)
-    else:
-        form = ProductForm()
-    return render(request, "add_product.html", {'form': form})
+    return redirect('main')
 
-
+@login_required
 def add_supply(request):
     if request.method == "POST":
         form = SupplyForm(request.POST)
@@ -31,12 +30,10 @@ def add_supply(request):
         else:
             messages.error(request, "There was an error in the data entered")
 
-    else:
-        form = SupplyForm()
-    return render(request, 'add_supply.html', {'form': form})
+    return redirect('main')
 
 
-   
+@login_required
 def add_purchase(request):
     if request.method == "POST":
         form = PurchaseForm(request.POST)
@@ -65,13 +62,9 @@ def add_purchase(request):
                 return redirect(redirect_url)
         else:
             messages.error(request, "There was an error in the data entered")
+    return redirect('main')
 
-    else:
-        form = PurchaseForm()
-    product_form = ProductPurchaseForm()
-    return render(request, 'add_purchase.html', {'form': form, 'product_form': product_form})
-
-
+@login_required
 def main(request):
     purchases = Purchase.objects.all()
     return render(

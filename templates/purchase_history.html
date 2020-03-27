@@ -59,4 +59,42 @@
         </tbody>
     </table>
 </div>
+
+<div class="myoverlay full-screen" id="add-product-view">
+    <i class="myclose">x</i>
+    <div class="container">
+        {% include 'add_product.html' %}
+    </div>
+</div>
+
+<div class="myoverlay full-screen" id="add-purchase-view">
+    <i class="myclose">x</i>
+    <div class="container">
+        {% include 'add_purchase.html' %}
+    </div>
+</div>
+
+<div class="myoverlay full-screen" id="add-supply-view">
+    <i class="myclose btn btn-danger">x</i>
+    <div class="container">
+        {% include 'add_supply.html' %}
+    </div>
+</div>
+<script>
+    document.querySelector("#add-supply-link").addEventListener("click", function (e) {
+        document.querySelector("#add-supply-view").classList.toggle("show");
+    });
+    document.querySelector("#add-product-link").addEventListener("click", function (e) {
+        document.querySelector("#add-product-view").classList.toggle("show");
+    });
+    document.querySelector("#add-purchase-link").addEventListener("click", function (e) {
+        document.querySelector("#add-purchase-view").classList.toggle("show");
+    });
+    let closes = document.getElementsByClassName("myclose");
+    for (let i = 0; i < closes.length; i++) {
+        closes[i].addEventListener('click', function (e) {
+            this.parentNode.classList.toggle("show");
+        });
+    }
+</script>
 {% endblock %}

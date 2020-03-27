@@ -2,12 +2,26 @@
 .bg-gray{
   background: #999;
 }
-
+.py-5vh{
+  padding: 5vh ;
+  background: linear-gradient(135deg,lime, blue);
+}
+.login-page {
+   height: 90vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 5%;
+   background: radial-gradient(lime, blue)
+}
+.login-page form{
+  color: white;
+}
 .r-5 {
   border-radius: 5px;
 }
 .full-screen{
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 .myoverlay{
   position: fixed;
@@ -17,7 +31,7 @@
   left: 0;
   width: 100%;
   overflow-y: auto;
-  background: linear-gradient(blue, lime);
+  background: linear-gradient(50deg,blue, lime);
  
   justify-content: center;
   align-items: center;
