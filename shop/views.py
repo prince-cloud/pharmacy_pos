@@ -15,7 +15,7 @@ def add_product(request):
             redirect_url = request.GET.get("next")
             if redirect_url is not None:
                 redirect(redirect_url)
-    return redirect('main')
+    return redirect('items_list')
 
 @login_required
 def add_supply(request):
@@ -30,7 +30,7 @@ def add_supply(request):
         else:
             messages.error(request, "There was an error in the data entered")
 
-    return redirect('main')
+    return redirect('items_list')
 
 
 @login_required
@@ -62,16 +62,31 @@ def add_purchase(request):
                 return redirect(redirect_url)
         else:
             messages.error(request, "There was an error in the data entered")
-    return redirect('main')
+    return redirect('items_list')
 
 @login_required
-def main(request):
+def history(request):
     purchases = Purchase.objects.all()
     return render(
         request, 
         'purchase_history.html', 
         {
             'purchases': purchases,
+            'purchase_form': PurchaseForm(),
+            'supply_form': SupplyForm(),
+            'product_form': ProductForm(),
+            'product_item_purchase_form': ProductPurchaseForm(),
+        }
+    )
+
+@login_required
+def items_list(request):
+    products = Product.objects.all()
+    return render(
+        request,
+        'items_list.html',
+        {
+            'products': products,
             'purchase_form': PurchaseForm(),
             'supply_form': SupplyForm(),
             'product_form': ProductForm(),

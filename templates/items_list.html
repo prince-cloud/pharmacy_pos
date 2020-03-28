@@ -1,60 +1,39 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 <div class="container">
-    <h2>Purchase history</h2>
+    <h2>Products</h2>
     <hr>
+    <br>
+    <input type="text" placeholder="Search for item"> <button>Search</button>
+    <br>
     <br>
     <table class="table table-striped">
         <thead class="bg-dark text-white">
             <tr>
-                <th> Date </th>
-                <th> User Name </th>
-                <th> Items Sold </th>
-                <th> Quantity </th>
+                <th> Name </th>
+                <th> Description </th>
                 <th> Unit price</th>
-                <th> Total Price </th>
-                <th>Total Sales</th>
+                <th> Quantity </th>
             </tr>
         </thead>
         <tbody>
-            {% for purchase in purchases %}
+            {% for product in products%}
             <tr>
-                <td>{{ purchase.date.date}} {{ purchase.date.time }}</td>
-                <td>{{ user.username }}</td>
-                <td>
-                    <ol>
-                    {% for itempurchase in purchase.item_purchases.all %}
-                    <li>{{ itempurchase.product }}</li>
-                    {% endfor %}
-                    </ol>
-                </td>
-                <td>
-                    <ol class="list-unstyled">
-                    {% for itempurchase in purchase.item_purchases.all %}
-                    <li>{{ itempurchase.quantity }}</li>
-                    {% endfor %}
-                    </ol>
-                </td>
-                <td>
-                    <ol class="list-unstyled">
-                    {% for itempurchase in purchase.item_purchases.all %}
-                    <li>{{ itempurchase.product.price }}</li>
-                    {% endfor %}
-                    </ol>
-                </td>
-                <td>
-                    <ol class="list-unstyled">
-                    {% for itempurchase in purchase.item_purchases.all %}
-                    <li>{{ itempurchase.total_amount }}</li>
-                    {% endfor %}
-                    </ol>
-                </td>
-                <td>{{ purchase.total_amount }}</td>
-            
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.available_quantity }}</td>
+
             </tr>
+
             {% empty %}
-            <tr><td colspan="7"><h1>There are no purchases at the moment...</h2></td></tr>
+            <tr>
+                <td colspan="7">
+                    <h1>There are no Items...</h2>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

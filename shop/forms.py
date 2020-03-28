@@ -15,7 +15,7 @@ class PurchaseForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields  = ('name', 'price', 'image')
+        fields  = ('name', 'price',)
 
 
 class ProductPurchaseForm(forms.Form):
