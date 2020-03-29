@@ -40,15 +40,12 @@
 
                         {% if request.user.is_authenticated %}
                         <li class="nav-item active">
-                            <a class="nav-link" id="add-purchase-link"> <i class="fas fa-plus"></i> <b> Add Purchase
-                                </b></a>
-                        </li>
-                        <li class="nav-item active">
                             <a class="nav-link" id="add-supply-link"> <i class="fas fa-plus"></i> <b> Add Supply
                                 </b></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" id="add-product-link" href="{% url 'history' %}"> <i class="fas fa-history"></i> <b>
+                            <a class="nav-link" id="add-product-link" href="{% url 'history' %}"> <i
+                                    class="fas fa-history"></i> <b>
                                     History </b></a>
                         </li>
                         <li class="nav-item active">

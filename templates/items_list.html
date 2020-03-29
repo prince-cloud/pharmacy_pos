@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
@@ -10,36 +11,156 @@
         <input name="q" type="text" placeholder="Search ....">
         <input type="submit" value="Search">
     </form>
+
     <br>
     <br>
-    <table class="table table-striped">
-        <thead class="bg-dark text-white">
-            <tr>
-                <th> Name </th>
-                <th> Description </th>
-                <th> Unit price</th>
-                <th> Quantity </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products%}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.available_quantity }}</td>
+    <div class="row">
+        <div class="col-lg-8">
 
-            </tr>
+            <table class="table table-striped">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th> Name </th>
+                        <th> Description </th>
+                        <th> Unit price</th>
+                        <th> Quantity </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products%}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.available_quantity }}</td>
 
-            {% empty %}
-            <tr>
-                <td colspan="7">
-                    <h1>There are no Items...</h2>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">
+                            <h1>There are no Items...</h2>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="bg-gray p-5">
+                <h2>Add Purchase details below</h2>
+            
+                <form method="POST" action="{% url 'add_purchase' %}?next=/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ purchase_form | crispy }}
+                    <p><input class="hidden" id="json_product_list" name="json_product_list" type="hidden" value=""></p>
+                    <div id="products-list">
+            
+                    </div>
+                    <p><input class="btn btn-primary btn-large" type="submit" value="Add Purchase"> </p>
+                </form>
+            
+                <div>
+                    {{ product_item_purchase_form | crispy }}
+            
+                    <a class="btn btn-success" id="add-product">Add Product</a>
+            
+                </div>
+
+            </div>
+            <script>
+                let p_list = document.querySelector("#products-list");
+                let add_b = document.querySelector("#add-product");
+                let prod = document.querySelector("#id_product");
+                let quant = document.querySelector("#id_quantity");
+                let data = [];
+                let json_product_list = document.querySelector("#json_product_list");
+                add_b.addEventListener("click", function (e) {
+                    if ((prod.value >= 0) & quant.value >= 1) {
+                        data.push(
+                            {
+                                id: prod.value,
+                                name: prod.selectedOptions[0].text,
+                                quantity: quant.value
+                            }
+                        );
+            
+                        constructProductNodes();
+                    }
+                    else {
+                        alert('Please enter a value in the fields')
+                    }
+            
+                });
+                function DeleteChild(id) {
+            
+                    let temp = [];
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i].id !== id) {
+                            temp.push(data[i]);
+                        }
+                    }
+                    data = temp;
+                    console.log(data);
+                    constructProductNodes();
+                }
+                function constructProductNodes() {
+                    p_list.innerHTML = "";
+                    json_product_list.value = JSON.stringify(data);
+                    for (let i = 0; i < data.length; i++) {
+            
+                        let temp = document.createElement("div");
+                        temp.classList.add("d-flex");
+                        temp.classList.add("flex-row");
+                        temp.classList.add("flex-row-reverse");
+                        temp.classList.add("align-items-center");
+                        
+                        temp.classList.add('my-3');
+                        temp.classList.add('r-5');
+                        temp.classList.add('shadow-sm');
+                        temp.classList.add('bg-light');
+            
+                        let div = document.createElement('div');
+            
+                        div.classList.add('w-100');
+                        div.classList.add('d-flex');
+                        div.classList.add('justify-content-between');
+                        div.classList.add('align-items-center');
+                        let left = document.createElement('span');
+                        left.classList.add('px-5')
+                        left.innerText = data[i].name;
+                        let right = document.createElement('span');
+                        right.classList.add('pr-5');
+                        right.innerText = data[i].quantity;
+                        div.appendChild(left);
+                        div.appendChild(right);
+            
+                        let close = document.createElement("i");
+                        close.innerText = 'x';
+                        close.classList.add("btn");
+                        close.classList.add("btn-danger");
+                        close.setAttribute("data", prod.value);
+                        close.addEventListener("click", function (e) {
+                            this.parentNode.parentNode.removeChild(this.parentNode);
+                            DeleteChild(this.getAttribute('data'))
+                        });
+                        temp.appendChild(close);
+                        temp.appendChild(div);
+            
+                        p_list.appendChild(temp);
+            
+                    }
+            
+                }
+            
+            </script>
+            <br>
+            <br>
+        </div>
+        
+    </div>
+
 </div>
 
 <div class="myoverlay full-screen" id="add-product-view">

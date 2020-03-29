@@ -85,7 +85,7 @@ def history(request):
 @login_required
 def items_list(request):
     items_list = Product.objects.all()
-
+    
     search_query = request.GET.get('q')
     if search_query:
         items_list = items_list.filter(
