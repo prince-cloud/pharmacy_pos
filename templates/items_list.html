@@ -6,7 +6,10 @@
     <h2>Products</h2>
     <hr>
     <br>
-    <input type="text" placeholder="Search for item"> <button>Search</button>
+    <form class="header-search-form" method="GET" action="{% url 'items_list' %}">
+        <input name="q" type="text" placeholder="Search ....">
+        <input type="submit" value="Search">
+    </form>
     <br>
     <br>
     <table class="table table-striped">

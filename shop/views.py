@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
 from .models import Product, Purchase, ItemPurchase
 from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm
 from django.contrib import messages
+from django.db.models import Q 
 from django.contrib.auth.decorators import login_required
 import json
+
 # Create your views here.
 @login_required
 def add_product(request):
@@ -81,12 +84,20 @@ def history(request):
 
 @login_required
 def items_list(request):
-    products = Product.objects.all()
+    items_list = Product.objects.all()
+
+    search_query = request.GET.get('q')
+    if search_query:
+        items_list = items_list.filter(
+            Q(name__icontains = search_query) |
+            Q(description__icontains = search_query) 
+        )
+
     return render(
         request,
         'items_list.html',
         {
-            'products': products,
+            'products': items_list,
             'purchase_form': PurchaseForm(),
             'supply_form': SupplyForm(),
             'product_form': ProductForm(),
