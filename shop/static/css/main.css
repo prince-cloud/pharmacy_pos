@@ -70,13 +70,6 @@
 
 }
 
-/* login form */
-#loginform{
-    width: 50%;
-    height: 50%;
-    padding-top: 20%;
-    background-color: green;
-}
 
 /* table css */
 #itemtable {
@@ -104,46 +97,21 @@
 }
 
 
-
-/* item buying table */
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-td, th {
-    text-align: left;
-    padding: 8px;
-  }
-
-
-  #totalprice{
-      text-align: right;
-  }
-
-
-  /* item quantity input */
-  #itemquantity{
-      width: 40px;
-  }
-
     /* navbar items */
-    .nav-item{
-        text-align: center;
+  .nav-item{
+      text-align: center;
     }
   .nav-link:hover{
-    box-shadow: 0px 0px 4px rgba(0,0,0,.5);
+    background-color: white;
     color: white;
-    border-radius: 5px;
+    border-radius: 3px;
     
   }
 
-  #input{
-      width:400px;
-  }
 
-  #sortinput{
-      width: 100px;
-  }
+  #input{
+    width:400px;
+    height: 35px;
+    border-radius: 3px;
+    outline-style: none;
+}

@@ -21,7 +21,7 @@
             {% for purchase in purchases %}
             <tr>
                 <td>{{ purchase.date.date}} {{ purchase.date.time }}</td>
-                <td>{{ user.username }}</td>
+                <td>{{ purchase.username }}</td>
                 <td>
                     <ol>
                     {% for itempurchase in purchase.item_purchases.all %}
@@ -46,11 +46,11 @@
                 <td>
                     <ol class="list-unstyled">
                     {% for itempurchase in purchase.item_purchases.all %}
-                    <li>{{ itempurchase.total_amount }}</li>
+                    <li>{{ itempurchase.total_amount }} </li>
                     {% endfor %}
                     </ol>
                 </td>
-                <td>{{ purchase.total_amount }}</td>
+                <td><b> Ghc {{ purchase.total_amount }}</b></td>
             
             </tr>
             {% empty %}

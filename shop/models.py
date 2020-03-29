@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Product(models.Model):
@@ -18,6 +18,8 @@ class Product(models.Model):
     def __repr__(self):
         return f'<Product: {self.name[:10]}>'
 
+
+
 class Supply(models.Model):
     product = models.ForeignKey(Product, related_name="supplies", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
@@ -33,13 +35,13 @@ class Supply(models.Model):
         return f'<Supply: {self.product.name} {self.quantity}>'
     
     def save(self, *args, **kwargs):
-        self.product.available_quantity = sum([supply.quantity for supply in self.product.supplies.all()]) + sum([purchase.quantity for purchase in self.product.purchases.all()])
+        self.product.available_quantity = int(self.product.available_quantity) + int(self.quantity)
         self.product.save()
         super(Supply, self).save(*args, **kwargs)
 
 
 class Purchase(models.Model):
-    customer = models.CharField(max_length=120, blank=True, null=True)
+    customer = models.CharField(max_length=100, null=True, blank=True)
     total_amount = models.DecimalField(decimal_places=2, max_digits=10, default=0.0)
     date = models.DateTimeField(auto_now=True)
 
@@ -50,7 +52,7 @@ class Purchase(models.Model):
         return f'Purchase by {self.customer}'
     
     def __repr__(self):
-        return f'<Purchase: GH{self.total_amount} by {self.customer}>'
+        return f'<Purchase: GH{self.total_amount} by {self.username}>'
 
 class ItemPurchase(models.Model):
     product = models.ForeignKey(Product, related_name="purchases", on_delete=models.CASCADE)
@@ -70,5 +72,9 @@ class ItemPurchase(models.Model):
         return f'<ItemPurchase: {self.product.name} {self.quantity}>'
     
     def save(self, *args, **kwargs):
-        
+        super(ItemPurchase, self).save(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.product.available_quantity = int(self.product.available_quantity) - int(self.quantity)
+        self.product.save()
         super(ItemPurchase, self).save(*args, **kwargs)
