@@ -13,8 +13,8 @@ class Product(models.Model):
     date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('-date',)
-        ordering = ('name',)
+        ordering = ('name', '-date',)
+        
 
     def __str__(self):
         return self.name
@@ -75,9 +75,6 @@ class ItemPurchase(models.Model):
     def __repr__(self):
         return f'<ItemPurchase: {self.product.name} {self.quantity}>'
     
-    def save(self, *args, **kwargs):
-        super(ItemPurchase, self).save(*args, **kwargs)
-
     def save(self, *args, **kwargs):
         self.product.available_quantity = int(self.product.available_quantity) - int(self.quantity)
         self.product.save()
