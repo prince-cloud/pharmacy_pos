@@ -1,9 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
+<<<<<<< HEAD
 from .models import Product, Purchase, ItemPurchase
 from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import json
+=======
+from django.contrib.auth.models import User
+from .models import Product, Purchase, ItemPurchase
+from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm
+from django.contrib import messages
+from django.db.models import Q 
+from django.contrib.auth.decorators import login_required
+import json
+
+>>>>>>> upstream/master
 # Create your views here.
 @login_required
 def add_product(request):
@@ -15,7 +26,11 @@ def add_product(request):
             redirect_url = request.GET.get("next")
             if redirect_url is not None:
                 redirect(redirect_url)
+<<<<<<< HEAD
     return redirect('main')
+=======
+    return redirect('items_list')
+>>>>>>> upstream/master
 
 @login_required
 def add_supply(request):
@@ -30,7 +45,11 @@ def add_supply(request):
         else:
             messages.error(request, "There was an error in the data entered")
 
+<<<<<<< HEAD
     return redirect('main')
+=======
+    return redirect('items_list')
+>>>>>>> upstream/master
 
 
 @login_required
@@ -62,10 +81,17 @@ def add_purchase(request):
                 return redirect(redirect_url)
         else:
             messages.error(request, "There was an error in the data entered")
+<<<<<<< HEAD
     return redirect('main')
 
 @login_required
 def main(request):
+=======
+    return redirect('items_list')
+
+@login_required
+def history(request):
+>>>>>>> upstream/master
     purchases = Purchase.objects.all()
     return render(
         request, 
@@ -77,4 +103,31 @@ def main(request):
             'product_form': ProductForm(),
             'product_item_purchase_form': ProductPurchaseForm(),
         }
+<<<<<<< HEAD
     )
+=======
+    )
+
+@login_required
+def items_list(request):
+    items_list = Product.objects.all()
+    
+    search_query = request.GET.get('q')
+    if search_query:
+        items_list = items_list.filter(
+            Q(name__icontains = search_query) |
+            Q(description__icontains = search_query) 
+        )
+
+    return render(
+        request,
+        'items_list.html',
+        {
+            'products': items_list,
+            'purchase_form': PurchaseForm(),
+            'supply_form': SupplyForm(),
+            'product_form': ProductForm(),
+            'product_item_purchase_form': ProductPurchaseForm(),
+        }
+    )
+>>>>>>> upstream/master

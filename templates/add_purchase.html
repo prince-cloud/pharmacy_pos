@@ -1,5 +1,6 @@
 {% load crispy_forms_tags %}
 
+<<<<<<< HEAD
 <div class="bg-gray p-5">
     <h2>Add Purchase details below</h2>
 
@@ -20,6 +21,31 @@
 
     </div>
 </div>
+=======
+<div style="background-color: red;">
+    <div class="bg-gray p-5">
+        <h2>Add Purchase</h2>
+    
+        <form method="POST" action="{% url 'add_purchase' %}?next=/" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ purchase_form | crispy }}
+            <p><input class="hidden" id="json_product_list" name="json_product_list" type="hidden" value=""></p>
+            <div id="products-list">
+    
+            </div>
+            <p><input class="btn btn-primary btn-large" type="submit" value="Add Purchase"> </p>
+        </form>
+    
+        <div>
+            {{ product_item_purchase_form | crispy }}
+    
+            <a class="btn btn-success" id="add-product">Add Product</a>
+    
+        </div>
+    </div>
+</div>
+
+>>>>>>> upstream/master
 <script>
     let p_list = document.querySelector("#products-list");
     let add_b = document.querySelector("#add-product");

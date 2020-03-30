@@ -22,7 +22,12 @@
     <div class="">
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color:rgb(0, 192,192);">
             <div class="container">
+<<<<<<< HEAD
                 <a class="navbar-brand" href="index.html" style="color: white"> <B> MEDICARE CHEMICALS</B></a>
+=======
+                <a class="navbar-brand" href="{% url 'items_list' %}" style="color: white;"> <B> MEDICARE
+                        CHEMICALS</B></a>
+>>>>>>> upstream/master
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,6 +36,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<<<<<<< HEAD
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="{% url 'main' %}"> <i class="fas fa-home"></i> <b> Home </b></a>
@@ -58,6 +64,42 @@
                                 </b></a>
                         </li>
                         {% endif %}
+=======
+
+                        {% if request.user.is_authenticated %}
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{% url 'items_list' %}"> <i class="fas fa-home"></i> <b> Home
+                                    </b></a>
+                            </li>
+    
+                        <li class="nav-item active">
+                            <a class="nav-link" id="add-supply-link"> <i class="fas fa-plus"></i> <b> Supply
+                                </b></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" id="add-product-link" href="{% url 'history' %}"> <i
+                                    class="fas fa-history"></i> <b>
+                                    History </b></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-about"></i> <b>About Us</b>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> <b> Log
+                                    Out </b> </a>
+                        </li>
+                        {% else %}
+
+                        <li class="nav-item active">
+                            <a class="nav-link btn" href="{% url 'login' %}"> <i class="fas fa-sign-in-alt"></i><b> Log
+                                    In
+                                </b></a>
+                        </li>
+                        {% endif %}
+
+>>>>>>> upstream/master
                     </ul>
                 </div>
             </div>
@@ -67,6 +109,7 @@
     <br>
     <br>
 
+<<<<<<< HEAD
 
 
     
@@ -75,6 +118,14 @@
 
    
     
+=======
+    {% block content %}
+
+
+
+    {% endblock %}
+
+>>>>>>> upstream/master
     <script src="{% static 'js/fontawesome.min.js' %}"></script>
     <script src="{% static 'js/all.min.js' %}"></script>
     <script src="{% static 'js/jquery-slim.min.js' %}"></script>
