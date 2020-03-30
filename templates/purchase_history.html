@@ -20,13 +20,8 @@
         <tbody>
             {% for purchase in purchases %}
             <tr>
-<<<<<<< HEAD
-                <td>{{ purchase.date.date }}</td>
-                <td>{{ purchase.customer }}</td>
-=======
                 <td>{{ purchase.date.date}} {{ purchase.date.time }}</td>
                 <td>{{ purchase.username }}</td>
->>>>>>> upstream/master
                 <td>
                     <ol>
                     {% for itempurchase in purchase.item_purchases.all %}
@@ -51,19 +46,11 @@
                 <td>
                     <ol class="list-unstyled">
                     {% for itempurchase in purchase.item_purchases.all %}
-<<<<<<< HEAD
-                    <li>{{ itempurchase.total_amount }}</li>
-                    {% endfor %}
-                    </ol>
-                </td>
-                <td>{{ purchase.total_amount }}</td>
-=======
                     <li>{{ itempurchase.total_amount }} </li>
                     {% endfor %}
                     </ol>
                 </td>
                 <td><b> Ghc {{ purchase.total_amount }}</b></td>
->>>>>>> upstream/master
             
             </tr>
             {% empty %}

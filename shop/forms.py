@@ -15,11 +15,7 @@ class PurchaseForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-<<<<<<< HEAD
-        fields  = ('name', 'price', 'image')
-=======
         fields  = ('name', 'price',)
->>>>>>> upstream/master
 
 
 class ProductPurchaseForm(forms.Form):
