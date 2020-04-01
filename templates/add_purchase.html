@@ -25,12 +25,12 @@
     </div>
 </div>
 
-
+{{ items|json_script:"items" }}
 <script>
 
 
     let items_json = {
-        items: JSON.parse('{{ items|safe }}'),
+        items: JSON.parse(document.getElementById('items').textContent),
         get_item: function (id) {
             for (let key in this.items) {
 
