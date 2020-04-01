@@ -25,12 +25,11 @@
     </div>
 </div>
 
-{{ items|json_script:"items" }}
 <script>
 
 
     let items_json = {
-        items: JSON.parse(document.getElementById('items').textContent),
+        items: JSON.parse('{{items|safe}}'),
         get_item: function (id) {
             for (let key in this.items) {
 
@@ -54,7 +53,9 @@
     add_b.addEventListener("click", function (e) {
         if ((prod.value >= 0) & quant.value >= 1) {
             for (let i = 0; i < data.length; i++) {
+           
                 if (data[i].id == prod.value) {
+                
                     if (parseInt(data[i].quantity) + parseInt(quant.value) <= parseInt(items_json.get_item(prod.value).quantity)) {
                         data[i].quantity = parseInt(data[i].quantity) + parseInt(quant.value);
                         data[i].price = data[i].quantity * items_json.get_item(prod.value).price;
@@ -68,8 +69,8 @@
                 }
 
             }
-
-            if (parseInt(quant.value) <= parseInt(items_json.get_item(2).quantity)) {
+            if (parseInt(quant.value) <= parseInt(items_json.get_item(prod.value).quantity)) {
+               
                 data.push(
                     {
                         id: prod.value,
