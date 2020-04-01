@@ -1,14 +1,30 @@
-
+.header-search-form input{
+  height: 60px;
+  margin: 0;
+  border: none;
+  
+}
+.header-search-form input[type='text']{
+  width: 70%;
+  padding: 5px 15px;
+}
+.header-search-form input[type='text']:focus{
+  border: none !important;
+}
+.header-search-form input[type="submit"]{
+  width: 30%;
+}
+.header-search-form{
+  display: flex;
+  align-items: center;
+ 
+}
 .bg-gray{
   background: #999;
 }
 .py-5vh{
   padding: 5vh ;
-<<<<<<< HEAD
-  background: linear-gradient(135deg,lime, blue);
-=======
   background: linear-gradient(135deg,#6a11cb, #2575fc);
->>>>>>> upstream/master
 }
 .login-page {
    height: 90vh;
@@ -16,11 +32,7 @@
    justify-content: center;
    align-items: center;
    padding: 5%;
-<<<<<<< HEAD
-   background: radial-gradient(lime, blue)
-=======
    background: radial-gradient(#6a11cb, #2575fc)
->>>>>>> upstream/master
 }
 .login-page form{
   color: white;
@@ -39,11 +51,7 @@
   left: 0;
   width: 100%;
   overflow-y: auto;
-<<<<<<< HEAD
-  background: linear-gradient(50deg,blue, lime);
-=======
-  background: linear-gradient(50deg,#6a11cb, #2575fc);
->>>>>>> upstream/master
+  background: rgba(255,255,255,.9);
  
   justify-content: center;
   align-items: center;
@@ -54,12 +62,7 @@
   0% {
     opacity: 0;
   }
-  30%{
-    transform: rotate(40deg);
-  }
-  60%{
-    transform: rotate(-40deg);
-  }
+  
   100% {
     opacity: 1;
   }
@@ -82,16 +85,6 @@
 
 }
 
-<<<<<<< HEAD
-/* login form */
-#loginform{
-    width: 50%;
-    height: 50%;
-    padding-top: 20%;
-    background-color: green;
-}
-=======
->>>>>>> upstream/master
 
 /* table css */
 #itemtable {
@@ -119,51 +112,6 @@
 }
 
 
-<<<<<<< HEAD
-
-/* item buying table */
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-td, th {
-    text-align: left;
-    padding: 8px;
-  }
-
-
-  #totalprice{
-      text-align: right;
-  }
-
-
-  /* item quantity input */
-  #itemquantity{
-      width: 40px;
-  }
-
-    /* navbar items */
-    .nav-item{
-        text-align: center;
-    }
-  .nav-link:hover{
-    box-shadow: 0px 0px 4px rgba(0,0,0,.5);
-    color: white;
-    border-radius: 5px;
-    
-  }
-
-  #input{
-      width:400px;
-  }
-
-  #sortinput{
-      width: 100px;
-  }
-=======
     /* navbar items */
   .nav-item{
       text-align: center;
@@ -175,11 +123,3 @@ td, th {
     
   }
 
-
-  #input{
-    width:400px;
-    height: 35px;
-    border-radius: 3px;
-    outline-style: none;
-}
->>>>>>> upstream/master

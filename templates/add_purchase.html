@@ -1,49 +1,93 @@
 {% load crispy_forms_tags %}
 
-<div style="background-color: red;">
-    <div class="bg-gray p-5">
+<div class="bg-gray p-5">
+    <div class="d-flex justify-content-between">
+
         <h2>Add Purchase</h2>
-    
-        <form method="POST" action="{% url 'add_purchase' %}?next=/" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ purchase_form | crispy }}
-            <p><input class="hidden" id="json_product_list" name="json_product_list" type="hidden" value=""></p>
-            <div id="products-list">
-    
-            </div>
-            <p><input class="btn btn-primary btn-large" type="submit" value="Add Purchase"> </p>
-        </form>
-    
-        <div>
-            {{ product_item_purchase_form | crispy }}
-    
-            <a class="btn btn-success" id="add-product">Add Product</a>
-    
+        <h2 class="text-white display-4 pl-1">GH <span id="price">0.0</span></h2>
+    </div>
+
+    <form method="POST" action="{% url 'add_purchase' %}?next=/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ purchase_form | crispy }}
+        <p><input class="hidden" id="json_product_list" name="json_product_list" type="hidden" value=""></p>
+        <div id="products-list">
+
         </div>
+        <p><input class="btn btn-primary btn-large" type="submit" value="Add Purchase"> </p>
+    </form>
+
+    <div>
+        {{ product_item_purchase_form | crispy }}
+
+        <a class="btn btn-success" id="add-product">Add Product</a>
+
     </div>
 </div>
 
+
 <script>
+
+
+    let items_json = {
+        items: JSON.parse('{{ items|safe }}'),
+        get_item: function (id) {
+            for (let key in this.items) {
+
+                if (this.items[key].id == id) {
+                    return this.items[key];
+                }
+            }
+        }
+    };
+
+
+
     let p_list = document.querySelector("#products-list");
     let add_b = document.querySelector("#add-product");
-    let prod = document.querySelector("#id_product");
-    let quant = document.querySelector("#id_quantity");
+    let prod = document.querySelector("#id_product_1");
+    let quant = document.querySelector("#id_quantity_1");
     let data = [];
     let json_product_list = document.querySelector("#json_product_list");
+    let total_price = 0.0;
+    let price_div = document.getElementById('price');
     add_b.addEventListener("click", function (e) {
         if ((prod.value >= 0) & quant.value >= 1) {
-            data.push(
-                {
-                    id: prod.value,
-                    name: prod.selectedOptions[0].text,
-                    quantity: quant.value
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].id == prod.value) {
+                    if (parseInt(data[i].quantity) + parseInt(quant.value) <= parseInt(items_json.get_item(prod.value).quantity)) {
+                        data[i].quantity = parseInt(data[i].quantity) + parseInt(quant.value);
+                        data[i].price = data[i].quantity * items_json.get_item(prod.value).price;
+                        constructProductNodes();
+                        return;
+                    }
+                    else {
+                        alert(`You are adding too high a quantity(${quant.value + data[i].quantity}) the maximum quantity is ${items_json.get_item(prod.value).quantity}`);
+                        return;
+                    }
                 }
-            );
 
-            constructProductNodes();
+            }
+
+            if (parseInt(quant.value) <= parseInt(items_json.get_item(2).quantity)) {
+                data.push(
+                    {
+                        id: prod.value,
+                        name: prod.selectedOptions[0].text,
+                        quantity: parseInt(quant.value),
+                        price: parseInt(quant.value) * items_json.get_item(prod.value).price,
+                    }
+                );
+
+                constructProductNodes();
+                return;
+            }
+            else {
+                alert(`You are adding too high a quantity the maximum quantity is ${items_json.get_item(prod.value).quantity}`);
+            }
         }
         else {
-            alert('Please enter a value in the fields')
+            alert(`Please enter a value in the fields prod.value = ${prod.value} quant.value = ${quant.value}`);
         }
 
     });
@@ -55,21 +99,22 @@
                 temp.push(data[i]);
             }
         }
+        
         data = temp;
-        console.log(data);
         constructProductNodes();
     }
     function constructProductNodes() {
         p_list.innerHTML = "";
         json_product_list.value = JSON.stringify(data);
+        total_price = 0.0;
         for (let i = 0; i < data.length; i++) {
-
+            total_price += parseFloat(data[i].price)
             let temp = document.createElement("div");
             temp.classList.add("d-flex");
             temp.classList.add("flex-row");
             temp.classList.add("flex-row-reverse");
             temp.classList.add("align-items-center");
-            
+
             temp.classList.add('my-3');
             temp.classList.add('r-5');
             temp.classList.add('shadow-sm');
@@ -105,8 +150,8 @@
             p_list.appendChild(temp);
 
         }
+        price_div.innerText = total_price;
 
     }
 
 </script>
-

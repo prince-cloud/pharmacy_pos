@@ -92,12 +92,15 @@ def items_list(request):
             Q(name__icontains = search_query) |
             Q(description__icontains = search_query) 
         )
-
+    items = Product.objects.all()
+    items_json = [{'id': item.id,'name': item.name, 'quantity': item.available_quantity, 'price': float(item.price)} for item in items]
+    
     return render(
         request,
         'items_list.html',
         {
             'products': items_list,
+            'items': json.dumps(items_json),
             'purchase_form': PurchaseForm(),
             'supply_form': SupplyForm(),
             'product_form': ProductForm(),

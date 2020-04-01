@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                         {% if request.user.is_authenticated %}
-                        <ul class="navbar-nav mr-auto">
+                        <ul class="navbar-nav ">
                             <li class="nav-item active">
                                 <a class="nav-link" href="{% url 'items_list' %}"> <i class="fas fa-home"></i> <b> Home
                                     </b></a>
@@ -45,7 +45,19 @@
                                 </b></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" id="add-product-link" href="{% url 'history' %}"> <i
+                            <a class="nav-link" id="add-product-link" href="#"> <i
+                                    class="fas fa-plus"></i> <b>
+                                    Add product
+                                    </b></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" id="add-purchase-link" href="#"> <i
+                                    class="fas fa-plus"></i> <b>
+                                    Add purchase
+                                    </b></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link"  href="{% url 'history' %}"> <i
                                     class="fas fa-history"></i> <b>
                                     History </b></a>
                         </li>
@@ -80,7 +92,51 @@
 
 
     {% endblock %}
+    
+    <!-- Special forms : these are hidden by default and need to be toggled using the menu-->
+    <div class="myoverlay full-screen" id="add-product-view">
+        <i class="myclose btn btn-danger">x</i>
+        <div class="container">
+            {% include 'add_product.html' %}
+        </div>
+    </div>
+    
+   
+    
+    <div class="myoverlay full-screen" id="add-supply-view">
+        <i class="myclose btn btn-danger">x</i>
+        <div class="container">
+            {% include 'add_supply.html' %}
+        </div>
+    </div>
+    
+    <div class="myoverlay full-screen" id="add-purchase-view">
+        <i class="myclose btn btn-danger">x</i>
+        <div class="container">
+            {% include 'add_purchase.html' %}
+        </div>
+    </div>
 
+
+    <script async>
+        document.querySelector("#add-supply-link").addEventListener("click", function (e) {
+            document.querySelector("#add-supply-view").classList.toggle("show");
+        });
+        document.querySelector("#add-product-link").addEventListener("click", function (e) {
+            document.querySelector("#add-product-view").classList.toggle("show");
+        });
+
+        document.querySelector("#add-purchase-link").addEventListener("click", function (e) {
+            document.querySelector("#add-purchase-view").classList.toggle("show");
+        });
+       
+        let closes = document.getElementsByClassName("myclose");
+        for (let i = 0; i < closes.length; i++) {
+            closes[i].addEventListener('click', function (e) {
+                this.parentNode.classList.toggle("show");
+            });
+        }
+    </script>
     <script src="{% static 'js/fontawesome.min.js' %}"></script>
     <script src="{% static 'js/all.min.js' %}"></script>
     <script src="{% static 'js/jquery-slim.min.js' %}"></script>

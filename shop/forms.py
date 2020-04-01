@@ -21,8 +21,8 @@ class ProductForm(forms.ModelForm):
 class ProductPurchaseForm(forms.Form):
     
     
-    product = forms.ChoiceField(choices = ())
-    quantity = forms.CharField(widget=forms.NumberInput())
+    product = forms.ChoiceField(choices = (), widget=forms.Select( attrs={'id': 'id_product_1'}))
+    quantity = forms.CharField(widget=forms.NumberInput( attrs={'id': 'id_quantity_1'}))
 
     def __init__(self, *args, **kwargs):
         super(ProductPurchaseForm, self).__init__(*args, **kwargs)
