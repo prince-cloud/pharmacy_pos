@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="display-3">Purchase history</h2>
+    <hr>
+    <br>
+    <table class="table shadow table-striped">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th> Date </th>
+                <th> Customer </th>
+                <th> Items Sold </th>
+                <th> Quantity </th>
+                <th> Unit price</th>
+                <th> Total Price </th>
+                <th>Total Sales</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+            <tr>
+                <td>{{ purchase.date}}</td>
+                <td>{{ purchase.customer }}</td>
+                <td>
+                    <ol>
+                    {% for itempurchase in purchase.item_purchases.all %}
+                    <li>{{ itempurchase.product }}</li>
+                    {% endfor %}
+                    </ol>
+                </td>
+                <td>
+                    <ol class="list-unstyled">
+                    {% for itempurchase in purchase.item_purchases.all %}
+                    <li>{{ itempurchase.quantity }}</li>
+                    {% endfor %}
+                    </ol>
+                </td>
+                <td>
+                    <ol class="list-unstyled">
+                    {% for itempurchase in purchase.item_purchases.all %}
+                    <li>{{ itempurchase.product.price }}</li>
+                    {% endfor %}
+                    </ol>
+                </td>
+                <td>
+                    <ol class="list-unstyled">
+                    {% for itempurchase in purchase.item_purchases.all %}
+                    <li>{{ itempurchase.total_amount }} </li>
+                    {% endfor %}
+                    </ol>
+                </td>
+                <td><b> Ghc {{ purchase.total_amount }}</b></td>
+            
+            </tr>
+            {% empty %}
+            <tr><td colspan="7"><h1>There are no purchases at the moment...</h2></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
