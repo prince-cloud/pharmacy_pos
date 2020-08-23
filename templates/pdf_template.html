@@ -1,86 +1,99 @@
 <head>
     <style>
-        @page {
-            size: a4 portrait;
-            @frame header_frame {           /* Static Frame */
-                -pdf-frame-content: header_content;
-                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
-            }
-            @frame content_frame {          /* Content Frame */
-                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
-            }
-            @frame footer_frame {           /* Another static Frame */
-                -pdf-frame-content: footer_content;
-                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
-            }
-        }
-        table{
-            width: 100%;
-        }
+        /* @page {
+           @frame header_frame {
+               /* Static Frame 
+               -pdf-frame-content: header_content;
+               
+               width: center;
+               top: 30pt;
+               height: 40pt;
+
+               text-align: center;
+           }
+
+           @frame content_frame {
+               /* Content Frame 
+               left: 50pt;
+               width: 480pt;
+               top: 70pt;
+               text-align: center;
+           }
+
+       }
+
+       table {
+           width: 100%;
+       } */
     </style>
-    </head>
-    
-    <body>
-        <!-- Content for Static Frame 'header_frame' -->
-        <div id="header_content">
-            <h3>Dennnis Ivanov Company</h3>
-        </div>
-    
-        <!-- Content for Static Frame 'footer_frame' -->
-        <div id="footer_content">(c) - page <pdf:pagenumber>
-            of <pdf:pagecount>
-        </div>
-    
-        <!-- HTML Content -->
-        <table>
-                <tr>
-                    <td>Pharmacy POS</td>
-                    <td>Joetib</td>
-                </tr>
-                <tr>
-                    <td>Drobo</td>
-                    <td>Prince Cloud</td>
-                </tr>
-                <tr>
-                    <td>{{zipcode}}</td>
-                    <td>{{website}}</td>
-                </tr>
-		
-        </table>
-    
-        <hr>
-	<div style="width: 50%;">
-	    <table>
-	        <tr>
-	            <td>Customer Name: </td>
-	            <td>{{ product.customer }}</td>
-	        </tr>
+</head>
 
-	    </table>
+<body>
 
-	</div>
-	<hr>
-    
-        <table>
-            <tr>
-     
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-            {% for item in purchase.item_purchases.all %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.product.price }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.total_amount }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    
+
+    <!-- Content for Static Frame 'header_frame' -->
+    <table id="header_content" style="text-align: center;">
+        <td>
+            <strong>
+                <h1>MEDICARE CHEMICALS</h1>
+            </strong>
+        </td>
+        <tr>
+            <td>
+                <h3>FIRE SERVICE RAOD - GBETSILE</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3> TELL: 024465392 / 0247591786 </h3>
+            </td>
+        </tr>
+
+    </table>
+    <br>
+    <!-- HTML Content -->
+    <table>
+        <tr>
+            <td>Date: {{ purchase.date.date }}</td>
+            <td>Time: {{purchase.date.time }}</td>
+        </tr>
+        <tr>
+            <td>User: {{ User.user }} </td>
+            <td>Customer: {{ purchase.customer }}</td>
+        </tr>
+    </table>
+
+
+    <div style="width: 50%;">
+
+
+    </div>
+
+
+    <table>
         <hr>
-    
-        <p><strong>Total: GH {{ purchase.total_amount }}</strong></p>
-    </body>
-    </html>
+
+        <tr>
+            <th style="text-align: left; width: 100px;">Product</th>
+            <th>Qty</th>
+            <th style="text-align: left;">Rate</th>
+            <th style="text-align: left;">Total</th>
+        </tr>
+        {% for item in purchase.item_purchases.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td style="text-align: center;">{{ item.quantity }}</td>
+            <td>{{ item.product.price }}</td>
+            <td>{{ item.total_amount }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+
+    <p><strong>Total: GH {{ purchase.total_amount }}</strong></p>
+    <h5 style="text-align: center;">THANK YOU FOR BUYING FROM MEDICARE CHEMICALS </h5>
+</body>
+
+</html>
