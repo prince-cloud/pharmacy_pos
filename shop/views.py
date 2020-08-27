@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-from .models import Product, Purchase, ItemPurchase
-from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm
+from .models import Product, Purchase, ItemPurchase, Expense
+from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm, ExpenseForm
 from django.contrib import messages
 from django.db.models import Q 
 from django.contrib.auth.decorators import login_required
@@ -48,6 +48,19 @@ def add_product(request):
     return redirect('items_list')
 
 @login_required
+def add_expense(request):
+    if request.method == 'POST':
+        form = ExpenseForm(data=request.POST)
+        if form.is_valid():
+            expense = form.save()
+            form.save()
+            messages.success(request, 'Expense added Successfully')
+            #if redirect_url is not None:
+                #redirect(redirect_url)
+    return redirect('history')
+
+
+@login_required
 def add_supply(request):
     if request.method == "POST":
         form = SupplyForm(request.POST)
@@ -86,23 +99,26 @@ def add_purchase(request):
             
             purchase.total_amount = purchase_price
             purchase.save()
-            
 
             messages.success(request, "Purchase created Successfully")
             redirect_url = request.GET.get("next")
-      
-            pdf = render_to_pdf('pdf_template.html', {'purchase': purchase})
-            return HttpResponse(pdf, content_type='application/pdf')
+
+            #if your want add printing
+            #pdf = render_to_pdf('pdf_template.html', {'purchase': purchase})
+            #return HttpResponse(pdf, content_type='application/pdf')
     
             if redirect_url is not None:
                 return redirect(redirect_url)
         else:
             messages.error(request, "There was an error in the data entered")
+
+
     return redirect('items_list')
 
 @login_required
 def history(request):
     purchases = Purchase.objects.all()
+    expenses = Expense.objects.all()
     return render(
         request, 
         'purchase_history.html', 
@@ -112,8 +128,11 @@ def history(request):
             'supply_form': SupplyForm(),
             'product_form': ProductForm(),
             'product_item_purchase_form': ProductPurchaseForm(),
+            'expenses': expenses,
+            'expense_form': ExpenseForm(),
         }
     )
+
 
 @login_required
 def items_list(request):
@@ -139,6 +158,8 @@ def items_list(request):
             'supply_form': SupplyForm(),
             'product_form': ProductForm(),
             'product_item_purchase_form': ProductPurchaseForm(),
+            'expense_form': ExpenseForm(),
         }
     )
+
 

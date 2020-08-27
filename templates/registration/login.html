@@ -22,9 +22,12 @@
                 <br>
                 {% csrf_token %}
                 {{ form | crispy }}
+
+               
                 <p>
-                    <input type="submit" class="btn btn-lg btn-primary" value="Log In" >
+                    <input type="submit" class="btn btn-lg btn-block btn-primary" value="Log In" >
                 </p>
+                <a class="btn btn-danger btn-block" href="{% url 'admin:index' %}" role="button">ADMINSTRATOR</a>
             </form>
         </div>
     </div>

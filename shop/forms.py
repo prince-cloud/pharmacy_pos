@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Product, Supply, Purchase
+from .models import Product, Supply, Purchase, Expense
 
 class SupplyForm(forms.ModelForm):
     class Meta:
@@ -17,9 +17,12 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields  = ('name', 'price','available_quantity', 'description')
 
+class ExpenseForm(forms.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ('description', 'amount')
 
 class ProductPurchaseForm(forms.Form):
-    
     
     product = forms.ChoiceField(choices = (), widget=forms.Select( attrs={'id': 'id_product_1'}))
     quantity = forms.CharField(widget=forms.NumberInput( attrs={'id': 'id_quantity_1'}))
