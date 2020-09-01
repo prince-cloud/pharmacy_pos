@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.db.models import Q 
 from django.contrib.auth.decorators import login_required
 import json
+import datetime
 from io import BytesIO
 from django.template.loader import get_template
 from django.http import FileResponse, HttpResponse
@@ -116,9 +117,20 @@ def add_purchase(request):
     return redirect('items_list')
 
 @login_required
-def history(request):
-    purchases = Purchase.objects.all()
-    expenses = Expense.objects.all()
+def history(request, year=None, month=None, day=None):
+    if year and month and day:
+        purchases = Purchase.objects.filter(date__year=year, date__month=month, date__day=day)
+        expenses = Expense.objects.filter(date__year=year, date__month=month, date__day=day)
+    elif year and month:
+        purchases = Purchase.objects.filter(date__year=year, date__month=month)
+        expenses = Expense.objects.filter(date__year=year, date__month=month)
+    elif year:
+        purchases = Purchase.objects.filter(date__year=year)
+        expenses = Expense.objects.filter(date__year=year)
+    else:
+        purchases = Purchase.objects.all()
+        expenses = Expense.objects.all()
+
     return render(
         request, 
         'purchase_history.html', 
@@ -130,6 +142,9 @@ def history(request):
             'product_item_purchase_form': ProductPurchaseForm(),
             'expenses': expenses,
             'expense_form': ExpenseForm(),
+            'year': year,
+            'month': month,
+            'day': day,
         }
     )
 
