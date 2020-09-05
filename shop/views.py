@@ -131,6 +131,17 @@ def history(request, year=None, month=None, day=None):
         purchases = Purchase.objects.all()
         expenses = Expense.objects.all()
 
+    total_purchases = 0
+    total_expenses = 0
+    for i in purchases:
+        total_purchases += i.total_amount
+    for x in expenses:
+        total_expenses += x.amount
+    
+    net_total = total_purchases - total_expenses
+
+    week = []
+
     return render(
         request, 
         'purchase_history.html', 
@@ -145,6 +156,9 @@ def history(request, year=None, month=None, day=None):
             'year': year,
             'month': month,
             'day': day,
+            'total_purchases': total_purchases,
+            'total_expenses': total_expenses,
+            'net_total': net_total,
         }
     )
 

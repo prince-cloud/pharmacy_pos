@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container pl-8 pr-8">
     <div class="container">
         <h2 class="display-4">SHOP HISTORY</h2>
     </div>
@@ -10,38 +10,37 @@
 
     <div class=" d-flex justify-content-center row pb-3">
 
+
         <div class="col-3">
-            <input type="number" class="form-control" placeholder="year" id="year">
+            <input type="number" class="form-control" placeholder="day" id="day">
         </div>
         <div class="col-3">
             <input type="number" class="form-control" placeholder="month" id="month">
         </div>
         <div class="col-3">
-            <input type="number" class="form-control" placeholder="day" id="day">
+            <input type="number" class="form-control" placeholder="year" id="year">
         </div>
+
         <div>
             <button class="btn btn-primary" id="filter">Filter</button>
         </div>
+
         <script>
             let year = document.getElementById("year");
             let month = document.getElementById("month");
             let day = document.getElementById("day");
             let filter = document.getElementById("filter");
-            
+
             filter.addEventListener("click", function (e) {
-                
-               let _year = parseInt(year.value);
+
+                let _year = parseInt(year.value);
 
                 let _month = parseInt(month.value);
 
                 let _day = parseInt(day.value);
-                alert(_year);
-                alert(_month);
-
-                alert("clicked");
                 let route = "{% url 'history' %}";
                 if (_year !== NaN && _year > 0) {
-                    route +=  + _year;
+                    route += + _year;
                     if (_month !== NaN && _month > 0) {
                         route += '/' + _month;
                         if (_day !== NaN && _day > 0) {
@@ -49,14 +48,38 @@
                         }
                     }
                 }
-                alert(route);
                 window.location = route;
             });
         </script>
     </div>
     <hr>
-    <div class="row">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 bg-success p-2 text-white">
+                <h6>Total Purchase = Ghc <span class="text-black"> <strong style="font-size: 20px;">
+                    {{ total_purchases }}</strong> </span></h6>
+            </div>
+            <div class="col-md-4 bg-info p-2 text-white">
+                <h6>Total Expenses = Ghc <span class="text-black"> <strong style="font-size: 20px;">
+                    {{ total_expenses }} </strong> </span></h6>
+            </div>
+            {% if net_total < 0 %}
+            <div class="col-md-4 bg-danger p-2">
+                <h6>NET SALES = Ghc <span class="text-black"> <strong style="font-size: 20px;">
+                            {{ net_total }} </strong> </span></h6>
+            </div>
+            {% else %}
+            <div class="col-md-4 bg-warning p-2 ">
+                <h6>NET AMOUNT = Ghc <span class="text-black"> <strong style="font-size: 20px;">
+                            {{ net_total }} </strong> </span></h6>
+            </div>
+            {% endif %}
 
+        </div>
+    </div>
+    <hr>
+    <br>
+    <div class="row">
         <div class="col-md-7">
             <div class="container">
                 <h2 class="display-5">SALES</h2>
@@ -97,7 +120,7 @@
                     {% empty %}
                     <tr>
                         <td colspan="6">
-                            <h1>There are no purchases at the moment...</h2>
+                            <h1>There are no purchases...</h2>
                         </td>
                     </tr>
                     {% endfor %}
@@ -129,7 +152,7 @@
                     {% empty %}
                     <tr>
                         <td colspan="7">
-                            <h1>There are no Expenses</h2>
+                            <h1>There are no Expenses...</h2>
                         </td>
                     </tr>
                     {% endfor %}
@@ -138,5 +161,8 @@
         </div>
     </div>
 </div>
+<br>
+<br>
+<br>
 
 {% endblock %}

@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
-    <h2 class="display-3">PRODUCTS</h2>
+    <div class="row">
+        <div class="col-2 text-center pt-2">
+            <img src="{% static 'images/briann_logo.jpg' %}" style="width: 150px; height: 150px;" class="pt-3 mr-3 " alt="">
+        </div>
+        <div class="col-9 pt-4 text-center">
+            <h2 class="display-4">PRODUCTS</h2>
+        </div>
+    </div>
+    
     <hr>
     <br>
     <form class="header-search-form shadow" method="GET" action="{% url 'items_list' %}">
@@ -15,7 +23,7 @@
     </form>
     <br>
     <div class="row">
-        <div class="col-12 ">
+        <div class="col-12">
             <table class="table shadow table-striped">
                 <thead class="bg-dark text-white">
                     <tr>

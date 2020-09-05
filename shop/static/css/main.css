@@ -1,3 +1,10 @@
+
+.containers-history {
+  background: #ecf0f1;
+  width: 90%;
+  text-align: center;
+}
+
 .header-search-form input{
   height: 60px;
   margin: 0;
