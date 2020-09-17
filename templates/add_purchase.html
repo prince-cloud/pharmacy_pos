@@ -1,0 +1,170 @@
+{% load crispy_forms_tags %}
+
+<div class="container bg-gray p-5" style="width: 50%;">
+    <div class="d-flex justify-content-between">
+
+        <h2>Add Purchase</h2>
+        <h2 class="text-white display-4 pl-1">GH <span id="price">0.0</span></h2>
+    </div>
+
+    <form method="POST" action="{% url 'add_purchase' %}?next=/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ purchase_form | crispy }}
+        <p><input class="hidden" id="json_product_list" name="json_product_list" type="hidden" value=""></p>
+
+        <div id="products-list">
+
+        </div>
+
+        <div>
+            {{ product_item_purchase_form | crispy }}
+  
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="btn btn-success" id="add-product">Add Product</a>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="btn btn-info btn-lg btn-block" type="submit" value="Complete">
+                    </div>
+                </div>
+
+
+
+
+        </div>
+    </form>
+
+
+</div>
+
+<script>
+
+
+    let items_json = {
+        items: JSON.parse('{{items|safe}}'),
+        get_item: function (id) {
+            for (let key in this.items) {
+
+                if (this.items[key].id == id) {
+                    return this.items[key];
+                }
+            }
+        }
+    };
+
+
+
+    let p_list = document.querySelector("#products-list");
+    let add_b = document.querySelector("#add-product");
+    let prod = document.querySelector("#id_product_1");
+    let quant = document.querySelector("#id_quantity_1");
+    let data = [];
+    let json_product_list = document.querySelector("#json_product_list");
+    let total_price = 0.0;
+    let price_div = document.getElementById('price');
+    add_b.addEventListener("click", function (e) {
+        if ((prod.value >= 0) & quant.value >= 1) {
+            for (let i = 0; i < data.length; i++) {
+
+                if (data[i].id == prod.value) {
+
+                    if (parseInt(data[i].quantity) + parseInt(quant.value) <= parseInt(items_json.get_item(prod.value).quantity)) {
+                        data[i].quantity = parseInt(data[i].quantity) + parseInt(quant.value);
+                        data[i].price = data[i].quantity * items_json.get_item(prod.value).price;
+                        constructProductNodes();
+                        return;
+                    }
+                    else {
+                        alert(`You are adding too high a quantity(${quant.value + data[i].quantity}) the maximum quantity is ${items_json.get_item(prod.value).quantity}`);
+                        return;
+                    }
+                }
+
+            }
+            if (parseInt(quant.value) <= parseInt(items_json.get_item(prod.value).quantity)) {
+
+                data.push(
+                    {
+                        id: prod.value,
+                        name: prod.selectedOptions[0].text,
+                        quantity: parseInt(quant.value),
+                        price: parseInt(quant.value) * items_json.get_item(prod.value).price,
+                    }
+                );
+
+                constructProductNodes();
+                return;
+            }
+            else {
+                alert(`You are adding too high a quantity the maximum quantity is ${items_json.get_item(prod.value).quantity}`);
+            }
+        }
+        else {
+            alert(`Please enter a value in the fields prod.value = ${prod.value} quant.value = ${quant.value}`);
+        }
+
+    });
+    function DeleteChild(id) {
+
+        let temp = [];
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].id !== id) {
+                temp.push(data[i]);
+            }
+        }
+
+        data = temp;
+        constructProductNodes();
+    }
+    function constructProductNodes() {
+        p_list.innerHTML = "";
+        json_product_list.value = JSON.stringify(data);
+        total_price = 0.0;
+        for (let i = 0; i < data.length; i++) {
+            total_price += parseFloat(data[i].price)
+            let temp = document.createElement("div");
+            temp.classList.add("d-flex");
+            temp.classList.add("flex-row");
+            temp.classList.add("flex-row-reverse");
+            temp.classList.add("align-items-center");
+
+            temp.classList.add('my-3');
+            temp.classList.add('r-5');
+            temp.classList.add('shadow-sm');
+            temp.classList.add('bg-light');
+
+            let div = document.createElement('div');
+
+            div.classList.add('w-100');
+            div.classList.add('d-flex');
+            div.classList.add('justify-content-between');
+            div.classList.add('align-items-center');
+            let left = document.createElement('span');
+            left.classList.add('px-5')
+            left.innerText = data[i].name;
+            let right = document.createElement('span');
+            right.classList.add('pr-5');
+            right.innerText = data[i].quantity;
+            div.appendChild(left);
+            div.appendChild(right);
+
+            let close = document.createElement("i");
+            close.innerText = 'x';
+            close.classList.add("btn");
+            close.classList.add("btn-danger");
+            close.setAttribute("data", prod.value);
+            close.addEventListener("click", function (e) {
+                this.parentNode.parentNode.removeChild(this.parentNode);
+                DeleteChild(this.getAttribute('data'))
+            });
+            temp.appendChild(close);
+            temp.appendChild(div);
+
+            p_list.appendChild(temp);
+
+        }
+        price_div.innerText = total_price;
+
+    }
+
+</script>

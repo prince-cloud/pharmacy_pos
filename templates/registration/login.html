@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="login-main-page full-screen">
+    <br>
+    <div class="container login-page">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <form method="POST" class="shadow p-5 py-5vh">
+                    <h2 class="text-center">Login</h2>
+                    <br>
+                    {% csrf_token %}
+                    {{ form | crispy }}
+
+                    <p>
+                        <input type="submit" class="btn btn-lg btn-block btn-primary" value="Log In">
+                    </p>
+                    <a class="btn btn-danger btn-block" href="{% url 'admin:index' %}" role="button">ADMIN</a>
+                </form>
+            </div>
+            <div class="col-md-6 logo">
+            </div>
+        </div>
+
+    </div>
+    <div class="container footer">
+        <p class="text-center bg-white mt-5 p-3"> All rights reserved @2020 | MEDICARE CHEMICALS.
+
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+
+
+<div class="container bg-gray p-5" style="width: 50%;">
+    <h2>Add Product details below</h2>
+
+
+
+    <form method="POST" action="{% url 'add_product' %}?next=/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ product_form | crispy }}
+
+        <p><input class="btn btn-info btn-lg btn-block" type="submit" value="Add product"> </p>
+        
+    </form>
+
+</div>

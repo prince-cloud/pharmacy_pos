@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-2 text-center pt-2">
+            <img src="{% static 'images/briann_logo.jpg' %}" style="width: 150px; height: 150px;" class="pt-3 mr-3 " alt="">
+        </div>
+        <div class="col-8 pt-4 text-center">
+            <h2 class="display-1">PRODUCTS</h2>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-info mt-3" type="button" disabled><b>User</b> {{ request.user }}</button>
+        </div>
+    </div>
+    
+    <hr>
+    <br>
+    <form class="header-search-form shadow" method="GET" action="{% url 'items_list' %}">
+        
+        <input id="input" class="" name="q" type="text" placeholder="Search ....">
+        <input type="submit" value="Search" class="btn btn-primary" style="background-color: rgb(0, 192,192)">
+
+    </form>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <table class="table shadow table-striped">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th> Name </th>
+                        <th> Description </th>
+                        <th> Unit price</th>
+                        <th> Quantity </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products%}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.available_quantity }}</td>
+
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">
+                            <h1>There are no Items...</h2>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

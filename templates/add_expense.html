@@ -1,0 +1,13 @@
+{% load crispy_forms_tags %}
+
+
+<div class="container bg-gray p-5" style="width: 50%;">
+    <h2>Add Expenses</h2>
+
+    <form method="POST" action="{% url 'add_expense' %}?next=/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ expense_form | crispy }}
+        <p><input class="btn btn-info btn-large btn-block" type="submit" value="Add Expense"> </p>
+    </form>
+
+</div>
