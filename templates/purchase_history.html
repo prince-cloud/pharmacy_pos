@@ -92,40 +92,6 @@
         </div>
     </div>
     <hr>
-    <div class="container d-flex justify-content-center row pb-3">
-        <input type="text" class="form-control" placeholder="drug_name" id="drug">
-        <button class="btn btn-success" id="filter">Search</button>
-        <script>
-            let drug = document.getElementById("drug");
-            let filter = document.getElementById("filter");
-
-            filter.addEventListener("click", function (e) {
-
-                
-                let route = "{% url 'history' %}";
-                
-                window.location = route;
-            });
-        </script>
-
-    </div>
-    <div class="container">
-        <table>
-            <thead>
-                <tr>
-                    <th> Product </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in itempurchases %}
-                <tr>
-                    <td>{{ item.product }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <hr>
 
     <br>
     <div class="row">
