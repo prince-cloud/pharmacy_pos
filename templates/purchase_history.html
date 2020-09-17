@@ -3,12 +3,25 @@
 {% block content %}
 <div class="container pl-8 pr-8">
     <div class="container">
-        <h2 class="display-4">SHOP HISTORY</h2>
+        <div class="row">
+        <div class="col-8 float-left"><h2 class="display-4">SHOP HISTORY</h2></div>
+        <div class="col-4 float-right">
+            <select class="custom-select md-form" searchable="Search">
+                <option value="" disabled selected> Export Data </option>
+                <option value=""> <a href="#"> Export to PDF </a> </option>
+                <option value=""> <a href="#"> Export to EXCEL </a> </option>
+                <option value=""> <a href="#"> Export to CSV </a> </option>
+                <label class="mdb-main-label"> Export File </label>
+
+            </select>
+
+
+        </div>
+        </div>
     </div>
     <hr>
-    <br>
 
-    <div class=" d-flex justify-content-center row pb-3">
+    <div class="d-flex justify-content-center row pb-3">
 
 
         <div class="col-3">
@@ -22,7 +35,7 @@
         </div>
 
         <div>
-            <button class="btn btn-primary" id="filter">Filter</button>
+            <button class="btn btn-success" id="filter">Search</button>
         </div>
 
         <script>
@@ -77,8 +90,8 @@
 
         </div>
     </div>
-    <hr>
     <br>
+
     <div class="row">
         <div class="col-md-7">
             <div class="container">
@@ -164,5 +177,7 @@
 <br>
 <br>
 <br>
+
+
 
 {% endblock %}

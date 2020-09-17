@@ -3,13 +3,13 @@
 {% load crispy_forms_tags %}
 
 
-<div class="bg-gray p-5">
+<div class="container bg-gray p-5" style="width: 50%;">
     <h2>Add supply details below</h2>
 
     <form method="POST" action="{% url 'add_supply' %}?next=/">
         {% csrf_token %}
         {{ supply_form | crispy }}
-        <p><input class="btn btn-primary btn-large" type="submit" value="Add Supply"> </p>
+        <p><input class="btn btn-info btn-large btn-block" type="submit" value="Add Supply"> </p>
     </form>
 
 </div>

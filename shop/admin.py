@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Product, Purchase, Expense
+from .models import Product, Purchase, Expense, ItemPurchase
 
 
 @admin.register(Product)
@@ -20,3 +20,7 @@ class PurchaseAdmin(admin.ModelAdmin):
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('date', 'description', 'amount')
+
+@admin.register(ItemPurchase)
+class ExpenseAdmin(admin.ModelAdmin):
+    list_display = ('product', 'quantity', 'total_amount')

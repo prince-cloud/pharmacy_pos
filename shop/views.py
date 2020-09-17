@@ -42,7 +42,7 @@ def add_product(request):
         form = ProductForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Product created Successfully")
+            messages.info(request, "Product Successfully added")
             redirect_url = request.GET.get("next")
             if redirect_url is not None:
                 redirect(redirect_url)
@@ -55,7 +55,7 @@ def add_expense(request):
         if form.is_valid():
             expense = form.save()
             form.save()
-            messages.success(request, 'Expense added Successfully')
+            messages.info(request, 'Expense Successfully added')
             #if redirect_url is not None:
                 #redirect(redirect_url)
     return redirect('history')
@@ -67,12 +67,12 @@ def add_supply(request):
         form = SupplyForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Supply created Successfully")
+            messages.info(request, "Supply added Successfully")
             redirect_url = request.GET.get("next")
             if redirect_url is not None:
                 redirect(redirect_url)
         else:
-            messages.error(request, "There was an error in the data entered")
+            messages.warning(request, "There was an error in the data entered")
 
     return redirect('items_list')
 
@@ -101,7 +101,7 @@ def add_purchase(request):
             purchase.total_amount = purchase_price
             purchase.save()
 
-            messages.success(request, "Purchase created Successfully")
+            messages.info(request, "Item Successfully Purchased")
             redirect_url = request.GET.get("next")
 
             #if your want add printing
@@ -111,13 +111,13 @@ def add_purchase(request):
             if redirect_url is not None:
                 return redirect(redirect_url)
         else:
-            messages.error(request, "There was an error in the data entered")
+            messages.warning(request, "There was an error in the data entered")
 
 
     return redirect('items_list')
 
 @login_required
-def history(request, year=None, month=None, day=None):
+def history(request, year=None, month=None, day=None, drug=None):
     if year and month and day:
         purchases = Purchase.objects.filter(date__year=year, date__month=month, date__day=day)
         expenses = Expense.objects.filter(date__year=year, date__month=month, date__day=day)
@@ -140,7 +140,8 @@ def history(request, year=None, month=None, day=None):
     
     net_total = total_purchases - total_expenses
 
-    week = []
+    if drug:
+        itempurchases = purchases.objects.filter(product=drug)
 
     return render(
         request, 
@@ -159,6 +160,7 @@ def history(request, year=None, month=None, day=None):
             'total_purchases': total_purchases,
             'total_expenses': total_expenses,
             'net_total': net_total,
+            'drug': drug,
         }
     )
 

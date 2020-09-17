@@ -1,7 +1,7 @@
 {% load crispy_forms_tags %}
 
 
-<div class="bg-gray p-5">
+<div class="container bg-gray p-5" style="width: 50%;">
     <h2>Add Product details below</h2>
 
 
@@ -11,14 +11,6 @@
         {{ product_form | crispy }}
 
         <p><input class="btn btn-info btn-lg btn-block" type="submit" value="Add product"> </p>
-        
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
         
     </form>
 

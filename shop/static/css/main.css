@@ -29,17 +29,24 @@
 .bg-gray{
   background: #999;
 }
+
+
+
+.logo{
+  background: url("briann_logo.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .py-5vh{
-  padding: 5vh ;
-  background: linear-gradient(135deg,#6a11cb, #2575fc);
+  background-color: teal;
+}
+
+.login-main-page{
+  background-color: rgb(0, 128, 128, 0.2);
 }
 .login-page {
-   height: 90vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   padding: 5%;
-   background: radial-gradient(#6a11cb, #2575fc)
+  padding-top: 5%;
 }
 .login-page form{
   color: white;
@@ -130,3 +137,12 @@
     
   }
 
+/* footer */
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}

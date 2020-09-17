@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
@@ -22,7 +24,7 @@
     <div class="">
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color:rgb(0, 192,192);">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'items_list' %}" style="color: white;"> <B> MEDICARE
+                <a class="navbar-brand text-center" href="{% url 'items_list' %}" style="color: white;"> <B> MEDICARE <br>
                         CHEMICALS</B></a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -59,7 +61,7 @@
                         <li class="nav-item active">
                             <a class="nav-link" id="add-expense-link"" href="#"> <i
                                     class="fas fa-plus"></i> <b>
-                                    Expenses </b></a>
+                                    Expense </b></a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link"  href="{% url 'history' %}"> <i
@@ -74,13 +76,6 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{% url 'admin:index' %}"> <i class="fas fa-sign-out-alt"></i> <b> Admin </b> </a>
                         </li>
-                        {% else %}
-
-                        <li class="nav-item active">
-                            <a class="nav-link btn" href="{% url 'login' %}"> <i class="fas fa-sign-in-alt"></i><b> Log
-                                    In
-                                </b></a>
-                        </li>
                         {% endif %}
 
                     </ul>
@@ -88,12 +83,22 @@
             </div>
         </nav>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="container alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+
     {% block content %}
 
-
-
-
     {% endblock %}
+
     <!-- Special forms : these are hidden by default and need to be toggled using the menu-->
     <div class="myoverlay full-screen" id="add-product-view">
         <i class="myclose btn btn-danger">X</i>
@@ -155,6 +160,9 @@
     <script src="{% static 'js/jquery-slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/mdb.min.js' %}"></script>
+
+
 </body>
 
 </html>
