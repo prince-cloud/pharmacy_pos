@@ -73,6 +73,8 @@ class ItemPurchase(models.Model):
     quantity = models.PositiveIntegerField()
     total_amount = models.DecimalField(decimal_places=2, max_digits=10)
     date = models.DateTimeField(auto_now_add=True)
+    qty = models.PositiveIntegerField()
+    #supply = models.
 
     class Meta:
         ordering = ('-date',)
@@ -85,7 +87,9 @@ class ItemPurchase(models.Model):
         return f'<ItemPurchase: {self.product.name} {self.quantity}>'
     
     def save(self, *args, **kwargs):
+        self.qty = self.product.available_quantity
         self.product.available_quantity = int(self.product.available_quantity) - int(self.quantity)
+        self.qty = self.product.available_quantity
         self.product.save()
         super(ItemPurchase, self).save(*args, **kwargs)
 

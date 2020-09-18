@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Product, Supply, Purchase, Expense
+from .models import Product, Supply, Purchase, Expense, ItemPurchase
 
 class SupplyForm(forms.ModelForm):
     class Meta:
@@ -36,3 +36,8 @@ class ProductPurchaseForm(forms.Form):
             print('\n\n', e, '\n\n')
             CHOICES = [(-1, 'NONE')]
         self.fields['product'].choices = CHOICES
+
+class GetItemForm(forms.ModelForm):
+    class Meta:
+        model = ItemPurchase
+        fields = ('product',)

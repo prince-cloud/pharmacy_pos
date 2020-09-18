@@ -22,5 +22,6 @@ class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('date', 'description', 'amount')
 
 @admin.register(ItemPurchase)
-class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('product', 'quantity', 'total_amount')
+class ItemPurchaseAdmin(admin.ModelAdmin):
+    list_display = ('product', 'quantity', 'qty', 'total_amount', 'date', 'id', 'purchase_id', 'product_id')
+    search_fields = ('product__name',)

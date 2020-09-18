@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from .models import Product, Purchase, ItemPurchase, Expense
-from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm, ExpenseForm
+from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm, ExpenseForm, GetItemForm
 from django.contrib import messages
 from django.db.models import Q 
 from django.contrib.auth.decorators import login_required
@@ -194,3 +194,26 @@ def items_list(request):
     )
 
 
+def drughistory(request, drug=None):
+    products = None
+    getDrug = ItemPurchase.objects.all()
+    if drug:
+        products = get_object_or_404(Product, name=drug)
+        getDrug = getDrug.filter(products = products)
+    
+    search_query = request.GET.get('q')
+    if search_query:
+        getDrug = getDrug.filter(
+            Q(product__name__icontains = search_query)
+        )
+    
+    product_sold = 0
+    for i in getDrug:
+        product_sold += i.total_amount
+
+    return render(request, 'drughistory.html',
+    {
+        'getDrug': getDrug, 
+        'products': products, 
+        'product_sold': product_sold
+    })
