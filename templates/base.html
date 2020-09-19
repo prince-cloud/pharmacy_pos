@@ -69,8 +69,9 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropDownMenuLink-333"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> History </a>
                             <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                                <a href="{% url 'history' %}" class="dropdown-item"> Sales </a>
-                                <a href="{% url 'drughistory' %}" class="dropdown-item"> Drugs </a>
+                                <a href="{% url 'history' %}" class="dropdown-item"> > Sales & Expenses </a>
+                                <a href="{% url 'drug_history' %}" class="dropdown-item"> > Products </a>
+                                <a href="{% url 'supply_history' %}" class="dropdown-item"> > Supplies </a>
                             </div>
                         </li>
 
@@ -91,14 +92,14 @@
         </nav>
     </div>
     {% if messages %}
-    {% for message in messages %}
-    <div class="container alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        <strong>{{ message }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
+        {% for message in messages %}
+        <div class="container alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
     {% endif %}
 
 

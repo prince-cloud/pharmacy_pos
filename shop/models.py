@@ -9,17 +9,20 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available_quantity = models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now=True)
+    expected_sales = models.DecimalField(max_digits=100, decimal_places=2)
 
     class Meta:
         ordering = ('name', '-date',)
         
-
     def __str__(self):
         return self.name
 
     def __repr__(self):
         return f'<Product: {self.name[:10]}>'
-
+    
+    def save(self, *args, **kwargs):
+        self.expected_sales = self.price * int(self.available_quantity)
+        super(Product, self).save(*args, **kwargs)
 
 
 class Supply(models.Model):
@@ -74,12 +77,10 @@ class ItemPurchase(models.Model):
     total_amount = models.DecimalField(decimal_places=2, max_digits=10)
     date = models.DateTimeField(auto_now_add=True)
     qty = models.PositiveIntegerField()
-    #supply = models.
 
     class Meta:
         ordering = ('-date',)
         
-    
     def __str__(self):
         return f'Purchase of {self.quantity} {self.product.name}'
     

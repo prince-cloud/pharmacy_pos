@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-from .models import Product, Purchase, ItemPurchase, Expense
+from .models import Product, Purchase, ItemPurchase, Expense, Supply
 from .forms import PurchaseForm, SupplyForm, ProductForm, ProductPurchaseForm, ExpenseForm, GetItemForm
 from django.contrib import messages
 from django.db.models import Q 
@@ -47,6 +47,7 @@ def add_product(request):
             if redirect_url is not None:
                 redirect(redirect_url)
     return redirect('items_list')
+
 
 @login_required
 def add_expense(request):
@@ -115,6 +116,7 @@ def add_purchase(request):
 
 
     return redirect('items_list')
+
 
 @login_required
 def history(request, year=None, month=None, day=None, drug=None):
@@ -194,26 +196,42 @@ def items_list(request):
     )
 
 
-def drughistory(request, drug=None):
+@login_required
+def drug_history(request, drug=None):
     products = None
+    product_sold = 0
+    qty = 0
+
     getDrug = ItemPurchase.objects.all()
     if drug:
         products = get_object_or_404(Product, name=drug)
         getDrug = getDrug.filter(products = products)
-    
+
+        
+
     search_query = request.GET.get('q')
     if search_query:
         getDrug = getDrug.filter(
             Q(product__name__icontains = search_query)
         )
+        for i in getDrug:
+            product_sold += i.total_amount
+            qty += i.quantity
     
-    product_sold = 0
-    for i in getDrug:
-        product_sold += i.total_amount
 
-    return render(request, 'drughistory.html',
+    return render(request, 'drug_history.html',
     {
         'getDrug': getDrug, 
         'products': products, 
-        'product_sold': product_sold
+        'product_sold': product_sold,
+        'qty': qty,
+    })
+
+
+@login_required
+def supply_history(request):
+    supplies = Supply.objects.all()
+    return render(request, 'supply_hisotry.html',
+    {
+        'supplies': supplies,
     })

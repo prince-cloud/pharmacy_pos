@@ -8,11 +8,11 @@
         <div class="col-2 text-center pt-2">
             <img src="{% static 'images/briann_logo.jpg' %}" style="width: 150px; height: 150px;" class="pt-3 mr-3 " alt="">
         </div>
-        <div class="col-8 pt-4 text-center">
+        <div class="col-7 pt-4 text-center">
             <h2 class="display-1">PRODUCTS</h2>
         </div>
-        <div class="col-2">
-            <button class="btn btn-info mt-3" type="button" disabled><b>User</b> {{ request.user }}</button>
+        <div class="col-3 text-center">
+            <button class="btn btn-info mt-5 text-center" type="button" disabled><small>current user</small> <br> {{ request.user }}</button>
         </div>
     </div>
     
@@ -27,7 +27,7 @@
     <br>
     <div class="row">
         <div class="col-12">
-            <table class="table shadow table-striped">
+            <table class="table shadow table-striped table-hover">
                 <thead class="bg-dark text-white">
                     <tr>
                         <th> Name </th>
