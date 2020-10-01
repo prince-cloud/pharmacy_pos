@@ -13,6 +13,7 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('name', '-date',)
+
         
     def __str__(self):
         return self.name
@@ -59,17 +60,6 @@ class Purchase(models.Model):
     def __repr__(self):
         return f'<Purchase: GH{self.total_amount} by {self.username}>'
 
-class Expense(models.Model):
-    description = models.CharField(max_length=600)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ('-date',)
-    
-    def __str__(self):
-        return self.description
-
 class ItemPurchase(models.Model):
     product = models.ForeignKey(Product, related_name="purchases", on_delete=models.CASCADE)
     purchase = models.ForeignKey(Purchase, related_name="item_purchases", on_delete=models.CASCADE)
@@ -94,3 +84,14 @@ class ItemPurchase(models.Model):
         self.product.save()
         super(ItemPurchase, self).save(*args, **kwargs)
 
+
+class Expense(models.Model):
+    description = models.CharField(max_length=600)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-date',)
+    
+    def __str__(self):
+        return self.description
