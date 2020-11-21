@@ -15,8 +15,6 @@ class ProductAdmin(admin.ModelAdmin):
 class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('date', 'description', 'amount')
 
-@admin.register(Purchase)
-class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ('date', 'customer', 'total_amount')
+admin.site.register(Purchase)
 
 admin.site.register(ItemPurchase)

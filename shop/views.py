@@ -113,6 +113,8 @@ def add_purchase(request):
                 return redirect(redirect_url)
         else:
             messages.warning(request, "There was an error in the data entered")
+
+
     return redirect('items_list')
 
 
