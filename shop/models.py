@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     name = models.CharField(max_length=300)
     description = models.CharField(max_length=600, default='no description')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=100, decimal_places=2)
     available_quantity = models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now=True)
     expected_sales = models.DecimalField(max_digits=100, decimal_places=2)

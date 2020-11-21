@@ -4,8 +4,7 @@
 <div class="container pl-8 pr-8">
     <div class="container">
         <div class="row">
-        <div class="col-8 float-left mt-3"><h2 class="display-4">SALES & EXPENSES</h2></div>
-       
+        <div class="col-12 mt-3 text-center"><h2 class="display-4">SALES & EXPENSES</h2></div>
         </div>
     </div>
     <hr>
@@ -14,17 +13,17 @@
     <div class="d-flex justify-content-center row pb-3">
 
 
-        <div class="col-3">
+        <div class="col-3 mt-2">
             <input type="number" class="form-control" placeholder="day" id="day">
         </div>
-        <div class="col-3">
+        <div class="col-3 mt-2">
             <input type="number" class="form-control" placeholder="month" id="month">
         </div>
-        <div class="col-3">
+        <div class="col-3 mt-2">
             <input type="number" class="form-control" placeholder="year" id="year">
         </div>
 
-        <div>
+        <div class="col-3">
             <button class="btn btn-success" id="filter">Search</button>
         </div>
 
@@ -56,6 +55,7 @@
         </script>
     </div>
     <hr>
+    {% if day or month or year %}
     <div class="container">
         <div class="row text-center">
             <div class="col-md-4 bg-success p-2 text-white">
@@ -66,29 +66,22 @@
                 <h6>Total Expenses = Ghc <span class="text-black"> <strong style="font-size: 20px;">
                     {{ total_expenses }} </strong> </span></h6>
             </div>
-            {% if net_total < 0 %}
-            <div class="col-md-4 bg-danger p-2">
+            
+            <div class="col-md-4 bg-{% if net_total < 0 %}danger{% else %}warning{% endif %} p-2">
                 <h6>NET SALES = Ghc <span class="text-black"> <strong style="font-size: 20px;">
                             {{ net_total }} </strong> </span></h6>
             </div>
-            {% else %}
-            <div class="col-md-4 bg-warning p-2 ">
-                <h6>NET AMOUNT = Ghc <span class="text-black"> <strong style="font-size: 20px;">
-                            {{ net_total }} </strong> </span></h6>
-            </div>
-            {% endif %}
-
         </div>
     </div>
     <hr>
-
+    {% endif %}
     <br>
     <div class="row">
         <div class="col-md-7">
             <div class="container">
                 <h2 class="display-5">SALES</h2>
             </div>
-            <table class="table shadow table-striped table-hover">
+            <table class="table shadow table-striped table-hover white-bg">
                 <thead class="bg-dark text-white">
                     <tr>
                         <th> Date </th>
@@ -136,7 +129,7 @@
             <div class="container">
                 <h2 class="display-5">EXPENSES</h2>
             </div>
-            <table class="table shadow table-striped">
+            <table class="table shadow table-striped white-bg">
                 <thead class="bg-dark text-white">
                     <tr>
                         <th> Date </th>

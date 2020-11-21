@@ -10,7 +10,7 @@ import datetime
 from io import BytesIO
 from django.template.loader import get_template
 from django.http import FileResponse, HttpResponse
-from xhtml2pdf import pisa
+#from xhtml2pdf import pisa
 # Create your views here.
 
 def render_to_pdf(template_src, context_dict={}):
@@ -34,6 +34,17 @@ data = {
 	"email": "youremail@dennisivy.com",
 	"website": "dennisivy.com",
 	}
+
+@login_required
+def index(request):
+    return render (request, 'index.html', 
+    {
+        'purchase_form': PurchaseForm(),
+        'supply_form': SupplyForm(),
+        'product_form': ProductForm(),
+        'product_item_purchase_form': ProductPurchaseForm(),
+        'expense_form': ExpenseForm(),
+    })
 
 
 @login_required
@@ -235,3 +246,7 @@ def supply_history(request):
     {
         'supplies': supplies,
     })
+
+@login_required
+def history_page(request):
+    return render(request, 'history.html')
