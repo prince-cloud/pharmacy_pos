@@ -88,45 +88,42 @@ def add_supply(request):
 
     return redirect('items_list')
 
+@login_required
+def sale(request):
+    products = Product.objects.all()
+    search_query = request.GET.get('q')
+    if search_query:
+        products = products.filter(
+            Q(name__icontains=search_query)
+        )
+
+    return render(request, 'pos/sale.html', {
+        "products": products,
+    })
+
 
 @login_required
-def add_purchase(request):
-    if request.method == "POST":
-        form = PurchaseForm(request.POST)
-        if form.is_valid():
-            purchase = form.save()
-            purchase_price = 0
-            
-            for item in json.loads(request.POST.get('json_product_list')):
-                product = get_object_or_404(Product, pk=item.get('id'))
-                quantity = int(item.get("quantity", 0))
-                total_amount = float(product.price) * quantity
-                purchase_price += total_amount
-                
-                item_purchase = ItemPurchase.objects.create(
-                    purchase = purchase,
-                    quantity = item.get("quantity", 0),
-                    product = product,
-                    total_amount = total_amount
-                )
-            
-            purchase.total_amount = purchase_price
-            purchase.save()
+def add_sale(request):
+    if request.method == 'POST':
+        data = json.loads(request.POST.get('data', None))
+        if data is None:
+            raise AttributeError
+        purchase = Purchase.objects.create(
+            total_amount=data['total_price'],
+        )
 
-            messages.info(request, "Item Successfully Purchased")
-            redirect_url = request.GET.get("next")
+        for order_item in data['order_list']:
+            ItemPurchase(
+                purchase = purchase,
+                product=Product.objects.get(pk=order_item['id']),
+                quantity=order_item['quantity'],
+                total_amount=order_item['price'],
 
-            #if your want add printing
-            #pdf = render_to_pdf('pdf_template.html', {'purchase': purchase})
-            #return HttpResponse(pdf, content_type='application/pdf')
-    
-            if redirect_url is not None:
-                return redirect(redirect_url)
-        else:
-            messages.warning(request, "There was an error in the data entered")
-
-
-    return redirect('items_list')
+            ).save()
+        purchase.save()
+        messages.success(request, "Purchase successfully added")
+        return redirect("/store/")
+    return redirect("/store/")
 
 
 @login_required

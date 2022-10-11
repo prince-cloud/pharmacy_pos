@@ -1,183 +1,202 @@
-body{
-  background-color: rgba(197, 197, 197, 0.432);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: url(../images/background.jpg);
-  background-repeat: none;
-  object-fit: cover;
-  color: white;
+.index-bg{
+    background-color: rgba(197, 197, 197, 0.432);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: url(../images/background.jpg);
+    background-repeat: none;
+    object-fit: cover;
+    color: white;
+  }
+
+
+.alert-error {
+    background: rgb(196, 55, 55);
+    color: white;
 }
+
+.font-xl {
+    font-size: 70px;
+}
+
+.text-bolder {
+    font-weight: bolder;
+}
+
+#deliveryLocation {
+    display: none;
+}
+
 .containers-history {
-  background: #ecf0f1;
-  width: 90%;
-  text-align: center;
-}
-
-.header-search-form input{
-  height: 60px;
-  margin: 0;
-  border: none;
-  
-}
-.header-search-form input[type='text']{
-  width: 70%;
-  padding: 5px 15px;
-}
-.header-search-form input[type='text']:focus{
-  border: none !important;
-}
-.header-search-form input[type="submit"]{
-  width: 30%;
-}
-.header-search-form{
-  display: flex;
-  align-items: center;
- 
-}
-.bg-gray{
-  background: #999;
-}
-
-
-
-.logo{
-  background: url("briann_logo.jpg");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.py-5vh{
-  background-color: teal;
-}
-
-.login-main-page{
-  background-color: rgb(0, 128, 128, 0.2);
-}
-.login-page {
-  padding-top: 5%;
-}
-.login-page form{
-  color: white;
-}
-.r-5 {
-  border-radius: 5px;
-}
-.full-screen{
-  min-height: 100vh !important;
-}
-.myoverlay{
-  position: fixed;
-  display: none;
-  transition: display 0.5s;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow-y: auto;
-  background: rgba(255,255,255,.9);
- 
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-  
-}
-@keyframes show {
-  0% {
-    opacity: 0;
+    background: #ecf0f1;
+    width: 90%;
+    text-align: center;
   }
   
-  100% {
-    opacity: 1;
+  .header-search-form input{
+    height: 60px;
+    margin: 0;
+    border: none;
+    
   }
-}
-.myoverlay.show{
-  display: flex;
-  animation: 1s ease-in-out show;
-}
-.navbar .nav-item {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-
-.myclose {
-  position: absolute;
-  top: 20px;
-  right: 10%;
-  color: white;
- 
-
-}
-
-
-/* table css */
-#itemtable {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
+  .header-search-form input[type='text']{
+    width: 70%;
+    padding: 5px 15px;
+  }
+  .header-search-form input[type='text']:focus{
+    border: none !important;
+  }
+  .header-search-form input[type="submit"]{
+    width: 30%;
+  }
+  .header-search-form{
+    display: flex;
+    align-items: center;
+   
+  }
+  .bg-gray{
+    background: #999;
+  }
+  
+  
+  
+  .logo{
+    background: url("briann_logo.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  
+  .py-5vh{
+    background-color: teal;
+  }
+  
+  .login-main-page{
+    background-color: rgb(0, 128, 128, 0.2);
+  }
+  .login-page {
+    padding-top: 5%;
+  }
+  .login-page form{
+    color: white;
+  }
+  .r-5 {
+    border-radius: 5px;
+  }
+  .full-screen{
+    min-height: 100vh !important;
+  }
+  .myoverlay{
+    position: fixed;
+    display: none;
+    transition: display 0.5s;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow-y: auto;
+    background: rgba(255,255,255,.9);
+   
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    
+  }
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    
+    100% {
+      opacity: 1;
+    }
+  }
+  .myoverlay.show{
+    display: flex;
+    animation: 1s ease-in-out show;
+  }
+  .navbar .nav-item {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  
+  .myclose {
+    position: absolute;
+    top: 20px;
+    right: 10%;
+    color: white;
+   
+  
+  }
+  
+  
+  /* table css */
+  #itemtable {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #itemtd, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    #itemtr:nth-child(even) {
+      background-color: rgba(167, 250, 250, 0.5)
+    }
+    #itemtr:nth-child(odd) {
+      background-color: rgb(255, 255, 255);
+    }
+  
+    #idlink{
+      color: black;
+      text-decoration: none;
+  }
+  
+  
+      /* navbar items */
+    .nav-item{
+        text-align: center;
+      }
+    .nav-link:hover{
+      background-color: white;
+      color: white;
+      border-radius: 3px;
+      
+    }
+  
+  /* footer */
+  
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
     width: 100%;
   }
   
-  #itemtd, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+  /* index */
+  .ind-img{
+    width: 150px;
+    height: 150px;
   }
   
-  #itemtr:nth-child(even) {
-    background-color: rgba(167, 250, 250, 0.5)
-  }
-  #itemtr:nth-child(odd) {
-    background-color: rgb(255, 255, 255);
-  }
-
-  #idlink{
-    color: black;
+  .link{
     text-decoration: none;
-}
-
-
-    /* navbar items */
-  .nav-item{
-      text-align: center;
-    }
-  .nav-link:hover{
-    background-color: white;
-    color: white;
-    border-radius: 3px;
-    
+    color: rgb(44, 44, 44);
   }
-
-/* footer */
-
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-}
-
-/* index */
-.ind-img{
-  width: 150px;
-  height: 150px;
-}
-
-.link{
-  text-decoration: none;
-  color: rgb(44, 44, 44);
-}
-
-.grey-bg:hover{
-  background-color: rgb(218, 218, 218);
-  color: white;
-}
-
-.white-bg{
-  background-color: white;
-}
-
-.b-radius{
-  border-radius: 9px;
-}
-
-.title{
-  font-weight: 600;
-}
+  
+  .grey-bg:hover{
+    background-color: rgb(218, 218, 218);
+    color: white;
+  }
+  
+  .white-bg{
+    background-color: white;
+  }
+  
+  .b-radius{
+    border-radius: 9px;
+  }
+  
+  .title{
+    font-weight: 600;
+  }
