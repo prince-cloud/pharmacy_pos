@@ -1,3 +1,4 @@
+from distutils.log import log
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from .models import Product, Purchase, ItemPurchase, Expense, Supply
@@ -57,7 +58,7 @@ def add_product(request):
             redirect_url = request.GET.get("next")
             if redirect_url is not None:
                 redirect(redirect_url)
-    return redirect('items_list')
+    return redirect('inventory')
 
 
 @login_required
@@ -247,3 +248,11 @@ def supply_history(request):
 @login_required
 def history_page(request):
     return render(request, 'history.html')
+
+@login_required
+def inventory(request):
+    drugs = Product.objects.all()
+    return render(request, 'inventory.html', {
+        "drugs": drugs,
+        'product_form': ProductForm(),
+    })

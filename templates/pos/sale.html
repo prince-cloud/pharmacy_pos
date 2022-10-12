@@ -4,6 +4,7 @@
 {% block title %}POS{% endblock title %}
 
 {% block content %}
+
 <div class="row">
     <div class="col-md-8">
 
@@ -67,11 +68,17 @@
                                 </td>
                                 <td>
 
-                                    {% if product.available_quantity <= 0 %} {% else %}<a
-                                        onclick="addItem({{ product.id }}, '{{ product.name }}', {{1}},  {{ product.price }}, {{ product.available_quantity }} )"
-                                        class="btn btn-outline-secondary btn-success btn-sm text-white">
-                                        add
-                                        </a> {% endif %}
+                                    {% if product.available_quantity <= 0 %} <a
+                                        class="btn btn-outline-secondary btn-danger btn-sm text-white">
+                                        out of stock
+                                        </a>
+
+                                        {% else %}<a
+                                            onclick="addItem({{ product.id }}, '{{ product.name }}', {{1}},  {{ product.price }}, {{ product.available_quantity }} )"
+                                            class="btn btn-outline-secondary btn-success btn-sm text-white">
+                                            add
+                                        </a>
+                                        {% endif %}
 
 
                                 </td>
@@ -131,8 +138,7 @@
                 </div>
             </div>
         </div>
-        <a href=""
-            class="card mt-4 bg-primary text-decoration-none text-white text-center">
+        <a href="" class="card mt-4 bg-primary text-decoration-none text-white text-center">
             <div class="card-body">
                 <div class="btn-group special text-center" role="group">
                     History

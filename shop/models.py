@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -8,8 +9,11 @@ class Product(models.Model):
     description = models.CharField(max_length=600, default='no description')
     price = models.DecimalField(max_digits=100, decimal_places=2)
     available_quantity = models.PositiveIntegerField(default=0)
+    expiry_date = models.DateField(blank=True, null=True)
+
+    expected_sales = models.DecimalField(max_digits=100, decimal_places=2, null=True, blank=True)
+    
     date = models.DateTimeField(auto_now=True)
-    expected_sales = models.DecimalField(max_digits=100, decimal_places=2)
 
     class Meta:
         ordering = ('name', '-date',)

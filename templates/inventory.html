@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<br>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form class="header-search-form shadow" method="GET" action="{% url 'drug_history' %}">
+
+                <input id="input" class="" name="q" type="text" placeholder="Search ....">
+                <input type="submit" value="Search" class="btn btn-info" style="background-color: rgb(0, 192,192)">
+
+            </form>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <a href="#" id="product-link" class="btn btn-md btn-success">
+            Add Product
+        </a>
+    </div>
+    
+</div>
+
+<div class="container pt-4">
+    <div class="row ">
+        <div class="col-12">
+            <table class="table shadow  table-hover table-striped white-bg">
+                <thead class="bg-dark text-white">
+                    <trz>
+                        <th>#</th>
+                        <th> Product </th>
+                        <th> Description </th>
+                        <th> Unit Price </th>
+                        <th> Available quantity </th>
+                        <th> Expiry Date </th>
+                        <th> Action </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in drugs %}
+                    <tr>
+                        <td> {{ forloop.counter }}</td>
+                        <td> {{ item.name }} </td>
+                        <td> {{ item.description }} </td>
+                        <td> Ghc {{ item.price }} </td>
+                        <td> 
+                            {% if item.available_quantity <= 0 %}
+                            <span
+                                        class="btn-danger btn-sm text-white">
+                                        out of stock
+                        </span>
+                            {% else %}
+
+                            {{ item.available_quantity }} 
+
+                            {% endif %}
+                        </td>
+                        <td> {{ item.expiry_date }} </td>
+                        <td> 
+                            <a href="" class="btn btn-sm btn-info"> + supply </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">
+                            <h4>No item found </h4>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="myoverlay full-screen" id="product-view">
+    <i class="myclose btn btn-danger">X</i>
+    <div class="container">
+        {% include 'add_product.html' %}
+    </div>
+</div>
+
+<script async>
+    document.querySelector("#product-link").addEventListener("click", function (e) {
+        document.querySelector("#product-view").classList.toggle("show");
+    });
+
+    let closes = document.getElementsByClassName("myclose");
+    for (let i = 0; i < closes.length; i++) {
+        closes[i].addEventListener('click', function (e) {
+            this.parentNode.classList.toggle("show");
+        });
+    }
+</script>
+
+
+{% endblock %}

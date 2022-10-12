@@ -26,6 +26,7 @@ urlpatterns = [
 
     #new implementations
     path("store/", views.sale, name="store"),
+    path("inventory/", views.inventory, name="inventory"),
 
 
 ]

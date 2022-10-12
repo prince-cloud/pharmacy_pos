@@ -18,9 +18,9 @@
             </div>
             <div class="col-md-4 text-center">
                 <div class="m-3 card grey-bg shadow">
-                    <a class="link" id="product-link" href="#">
+                    <a class="link" href="{% url 'inventory' %}">
                         <img class="ind-img" src="{% static 'images/itemlist.png' %}" alt="img not found">
-                        <h3 class=""><i class="fas fa-plus"></i> Products</h3>
+                        <h3 class=""><i class="fas fa-plus"></i> Inventory</h3>
                     </a>
                 </div>
             </div>
@@ -80,13 +80,7 @@
     
     
     
-    <div class="myoverlay full-screen" id="product-view">
-        <i class="myclose btn btn-danger">X</i>
-        <div class="container">
-            {% include 'add_product.html' %}
-        </div>
-    </div>
-    
+
     <div class="myoverlay full-screen" id="supply-view">
         <i class="myclose btn btn-danger">X</i>
         <div class="container">
