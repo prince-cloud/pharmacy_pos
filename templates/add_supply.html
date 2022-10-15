@@ -1,16 +1,25 @@
-
+{% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
 
 
-<div class="container bg-gray p-5" style="width: 50%;">
-    <h2>Add supply details below</h2>
+{% block content %}
 
-    <form method="POST" action="{% url 'add_supply' %}?next=/">
-        {% csrf_token %}
-        {{ supply_form | crispy }}
-        <p><input class="btn btn-info btn-large btn-block" type="submit" value="Add Supply"> </p>
-    </form>
+<div class="container">
+   <div class="row text-center justify-content-center align-items-center">
+    <div class="col-md-6 p-5">
+        <div class="text-left bg-gray p-5">
+            <h2 class="text-center">Add supply to {{ product.name }}</h2>
+    
+            <form method="POST">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <p><input class="btn btn-info btn-large btn-block" type="submit" value="Add Supply"> </p>
+            </form>
+        </div>
+    </div>
+   </div>
 
 </div>
 
+{% endblock %}

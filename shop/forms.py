@@ -2,10 +2,14 @@ from django import forms
 
 from .models import Product, Supply, Purchase, Expense, ItemPurchase
 
+class DateInput(forms.DateInput):
+    input_type = "date"
+
+
 class SupplyForm(forms.ModelForm):
     class Meta:
         model = Supply
-        fields = ('product', 'quantity')
+        fields = ('quantity',)
 
 class PurchaseForm(forms.ModelForm):
     class Meta:
@@ -13,9 +17,14 @@ class PurchaseForm(forms.ModelForm):
         fields  = ( 'customer', )
     
 class ProductForm(forms.ModelForm):
+
+    expiry_date = forms.DateField(
+        widget=DateInput,
+        label="Expiry Date",
+    )
     class Meta:
         model = Product
-        fields  = ('name', 'price','available_quantity', 'description')
+        fields  = ('name', 'price','available_quantity', 'expiry_date', 'description')
 
 class ExpenseForm(forms.ModelForm):
     class Meta:

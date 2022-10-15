@@ -11,6 +11,7 @@ import datetime
 from io import BytesIO
 from django.template.loader import get_template
 from django.http import FileResponse, HttpResponse
+from django.utils import timezone
 #from xhtml2pdf import pisa
 # Create your views here.
 
@@ -75,19 +76,25 @@ def add_expense(request):
 
 
 @login_required
-def add_supply(request):
+def add_supply(request, id):
+    product = get_object_or_404(Product, id=id)
     if request.method == "POST":
         form = SupplyForm(request.POST)
         if form.is_valid():
+            supply = form.save(commit=False)
+            supply.product = product
             form.save()
             messages.info(request, "Supply added Successfully")
-            redirect_url = request.GET.get("next")
-            if redirect_url is not None:
-                redirect(redirect_url)
+            return redirect("/inventory/")
         else:
             messages.warning(request, "There was an error in the data entered")
+    else:
+        form = SupplyForm()
 
-    return redirect('items_list')
+    return render(request, 'add_supply.html', {
+        "form" : form,
+        "product": product,
+    })
 
 @login_required
 def sale(request):
@@ -109,8 +116,10 @@ def add_sale(request):
         data = json.loads(request.POST.get('data', None))
         if data is None:
             raise AttributeError
+
         purchase = Purchase.objects.create(
             total_amount=data['total_price'],
+            seller = request.user
         )
 
         for order_item in data['order_list']:
@@ -119,7 +128,7 @@ def add_sale(request):
                 product=Product.objects.get(pk=order_item['id']),
                 quantity=order_item['quantity'],
                 total_amount=order_item['price'],
-
+                seller=request.user
             ).save()
         purchase.save()
         messages.success(request, "Purchase successfully added")
@@ -151,8 +160,9 @@ def history(request, year=None, month=None, day=None, drug=None):
     
     net_total = total_purchases - total_expenses
 
-    if drug:
-        itempurchases = purchases.objects.filter(product=drug)
+    last_sales = 0
+    for a in purchases.filter(date__gt=timezone.now() - datetime.timedelta(days=7)):
+        last_sales += a.total_amount
 
     return render(
         request, 
@@ -172,6 +182,7 @@ def history(request, year=None, month=None, day=None, drug=None):
             'total_expenses': total_expenses,
             'net_total': net_total,
             'drug': drug,
+            'last_sales': last_sales,
         }
     )
 

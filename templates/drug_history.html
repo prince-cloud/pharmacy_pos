@@ -49,6 +49,7 @@
                         <th> Qty Sold </th>
                         <th> Total amount </th>
                         <th> Available quantity </th>
+                        <th> Seller </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,9 +59,8 @@
                         <td> {{ item.date }} </td>
                         <td> {{ item.quantity }} </td>
                         <td> Ghc {{ item.total_amount }} </td>
-                        <td>
-                            {{ item.qty }}
-                        </td>
+                        <td> {{ item.qty }} </td>
+                        <td> {{ item.seller.username }} </td>
                     </tr>
                     {% empty %}
                     <tr>

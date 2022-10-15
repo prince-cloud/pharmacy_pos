@@ -59,7 +59,7 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-md-4 bg-success p-2 text-white">
-                <h6>Total Purchase = Ghc <span class="text-black"> <strong style="font-size: 20px;">
+                <h6>Total Sales = Ghc <span class="text-black"> <strong style="font-size: 20px;">
                     {{ total_purchases }}</strong> </span></h6>
             </div>
             <div class="col-md-4 bg-info p-2 text-white">
@@ -74,6 +74,15 @@
         </div>
     </div>
     <hr>
+    {% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 bg-success p-2 text-white">
+                <h6>Last 7 days: Ghc <span class="text-black"> <strong style="font-size: 20px;">
+                    {{ last_sales }}</strong> </span></h6>
+            </div>
+        </div>
+    </div>
     {% endif %}
     <br>
     <div class="row">
@@ -85,17 +94,16 @@
                 <thead class="bg-dark text-white">
                     <tr>
                         <th> Date </th>
-                        <th> Customer </th>
                         <th> Items Sold </th>
                         <th> Qty </th>
                         <th>Total Sales</th>
+                        <th> Seller </th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for purchase in purchases %}
                     <tr>
                         <td>{{ purchase.date }}</td>
-                        <td>{{ purchase.customer }}</td>
                         <td>
                             <ol>
                                 {% for itempurchase in purchase.item_purchases.all %}
@@ -112,6 +120,7 @@
                         </td>
 
                         <td><b> Ghc {{ purchase.total_amount }}</b></td>
+                        <td><b> {{ purchase.seller }}</b></td>
 
                     </tr>
                     {% empty %}

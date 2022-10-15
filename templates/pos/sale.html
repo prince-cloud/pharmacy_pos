@@ -21,8 +21,6 @@
                         <input name="q" type="text" class="form-control" id="myInput" onkeyup="myFunction()"
                             placeholder="Search..." aria-label="search" aria-describedby="search">
                     </div>
-
-
                 </div>
             </div>
             <div class="card-body">
@@ -78,8 +76,7 @@
                                             class="btn btn-outline-secondary btn-success btn-sm text-white">
                                             add
                                         </a>
-                                        {% endif %}
-
+                                    {% endif %}
 
                                 </td>
                             </tr>
@@ -100,7 +97,7 @@
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><strong>Order summary</strong></h4>
+                                <h4 class="panel-title"><strong>Purchase</strong></h4>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -129,6 +126,55 @@
                         </div>
                     </div>
                 </div>
+
+                <label class="col-form-label">Payment Method</label>
+                <div class="form-group row">
+
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" value="cash" class="form-check-input" name="payment-method" id="cash"
+                                    checked>
+                                Cash
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" value="momo" class="form-check-input" name="payment-method" id="momo">
+                                Momo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid" id="box">
+                    <div class="row" >
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Cash</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-dark text-white">GH₵</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="cash-input" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label>Change</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-dark text-white">GH₵</span>
+                                </div>
+                                <input type="text" class="form-control" id="change-input" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
                 <div class="mt-2 btn-group specisal align-items-center d-flex flex-row justify-content-spacebetween"
                     role="group">
                     {% csrf_token %}
@@ -138,15 +184,10 @@
                 </div>
             </div>
         </div>
-        <a href="" class="card mt-4 bg-primary text-decoration-none text-white text-center">
-            <div class="card-body">
-                <div class="btn-group special text-center" role="group">
-                    History
-                </div>
-            </div>
-        </a>
+
     </div>
 </div>
+
 
 
 <script>
@@ -155,7 +196,9 @@
     var order_list = [];
     var new_data = [];
     let orderTotal = document.getElementById('orderTotalPrice');
-
+    let cinput = document.getElementById('cash-input');
+    let chinput = document.getElementById('change-input');
+    let cashradio = document.getElementById('cash');
 
 
     function addItem(item_id, item_name, item_qty, item_price, item_quantity) {
@@ -187,6 +230,7 @@
 
 
     }
+
     function createNode() {
         var tableBody = document.getElementById('summary-table-body');
         tableBody.innerHTML = "";
@@ -233,8 +277,12 @@
             //tableBody.appendChild(getTotal(order_total_price));
             orderTotal.innerHTML = order_total_price;
 
+
             //console.log(order_list);
 
+        }
+        if (new_data.length > 0) {
+            document.getElementById('cash-input').disabled = false;
         }
 
     };
@@ -258,6 +306,10 @@
         table.innerHTML = "";
         new_data = [];
         orderTotal.innerHTML = "0.00";
+        chinput.value = 0;
+        cinput.value = 0;
+        document.getElementById('cash-input').disabled = true;
+
     }
 
     function clearTotal() {
@@ -297,6 +349,16 @@
             window.alert("Please add an Order Item");
             return;
         };
+
+        if ( document.getElementById('cash').checked && cinput.value <= 0) {
+            window.alert("Please enter amount given");
+            return;
+        }
+
+        if (document.getElementById('cash').checked && cinput.value < total_price){
+            window.alert("Cash is less than purchase amount");
+            return;
+        }
 
         data = {
             'order_list': new_data,
@@ -345,6 +407,28 @@
         }
     }
 
+
+    cinput.addEventListener('input', (event) => {
+        var amount = cinput.value;
+
+        chinput.value = amount - total_price;
+    })
+
+
 </script>
 
+<script>
+        function handleRadioClick() {
+        if (document.getElementById('cash').checked) {
+            box.style.display = 'block';
+        } else {
+            box.style.display = 'none';
+        }
+    }
+
+    const radioButtons = document.querySelectorAll('input[name="payment-method"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('click', handleRadioClick);
+    });
+</script>
 {% endblock content %}

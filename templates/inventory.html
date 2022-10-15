@@ -12,8 +12,11 @@
         <div class="col-8">
             <form class="header-search-form shadow" method="GET" action="{% url 'drug_history' %}">
 
-                <input id="input" class="" name="q" type="text" placeholder="Search ....">
-                <input type="submit" value="Search" class="btn btn-info" style="background-color: rgb(0, 192,192)">
+                <input name="q" type="text" class="form-control" id="myInput" onkeyup="myFunction()"
+                placeholder="Search..." aria-label="search" aria-describedby="search">
+
+
+                <input type="submit" value="Search" class="btn btn-info" style="background-color: rgb(0, 192,192)" disabled>
 
             </form>
         </div>
@@ -35,7 +38,7 @@
 <div class="container pt-4">
     <div class="row ">
         <div class="col-12">
-            <table class="table shadow  table-hover table-striped white-bg">
+            <table class="table shadow  table-hover table-striped white-bg"  id="myTable">
                 <thead class="bg-dark text-white">
                     <trz>
                         <th>#</th>
@@ -56,19 +59,25 @@
                         <td> Ghc {{ item.price }} </td>
                         <td> 
                             {% if item.available_quantity <= 0 %}
-                            <span
-                                        class="btn-danger btn-sm text-white">
-                                        out of stock
-                        </span>
+                                <span class="btn-warning btn-sm text-white">
+                                    out of stock
+                                </span>
                             {% else %}
 
                             {{ item.available_quantity }} 
 
                             {% endif %}
                         </td>
-                        <td> {{ item.expiry_date }} </td>
                         <td> 
-                            <a href="" class="btn btn-sm btn-info"> + supply </a>
+                            {% if item.is_expired %}
+                            <span class="btn-danger btn-sm text-white mr-1">
+                                expired
+                            </span>
+                            {% endif %}
+                            {{ item.expiry_date }} 
+                        </td>
+                        <td> 
+                            <a href="{% url 'add_supply' item.id %}" class="btn btn-sm btn-info" > + supply </a>
                         </td>
                     </tr>
                     {% empty %}
@@ -91,10 +100,13 @@
     </div>
 </div>
 
+
+
 <script async>
     document.querySelector("#product-link").addEventListener("click", function (e) {
         document.querySelector("#product-view").classList.toggle("show");
     });
+
 
     let closes = document.getElementsByClassName("myclose");
     for (let i = 0; i < closes.length; i++) {
@@ -102,6 +114,31 @@
             this.parentNode.classList.toggle("show");
         });
     }
+
+
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        //tr = document.getElementById("mytr");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
 </script>
 
 

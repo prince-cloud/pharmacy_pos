@@ -1,6 +1,6 @@
 from contextlib import nullcontext
 from django.db import models
-
+from django.utils import timezone
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -28,10 +28,14 @@ class Product(models.Model):
         self.expected_sales = self.price * int(self.available_quantity)
         super(Product, self).save(*args, **kwargs)
 
+    def is_expired(self):
+        if self.expiry_date < timezone.now().date():
+            return True
+        return False
 
 class Supply(models.Model):
     product = models.ForeignKey(Product, related_name="supplies", on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now=True)
     
     class Meta:
@@ -53,6 +57,7 @@ class Purchase(models.Model):
     customer = models.CharField(max_length=100, null=True, blank=True)
     total_amount = models.DecimalField(decimal_places=2, max_digits=10, default=0.0)
     date = models.DateTimeField(auto_now=True)
+    seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="sales")
 
     class Meta:
         ordering = ('-date',)
@@ -81,6 +86,7 @@ class ItemPurchase(models.Model):
     total_amount = models.DecimalField(decimal_places=2, max_digits=10)
     date = models.DateTimeField(auto_now_add=True)
     qty = models.PositiveIntegerField()
+    seller = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="drugs_sold")
 
     class Meta:
         ordering = ('-date',)
