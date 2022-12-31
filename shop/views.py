@@ -148,8 +148,8 @@ def history(request, year=None, month=None, day=None, drug=None):
         purchases = Purchase.objects.filter(date__year=year)
         expenses = Expense.objects.filter(date__year=year)
     else:
-        purchases = Purchase.objects.all()
-        expenses = Expense.objects.all()
+        purchases = Purchase.objects.filter(date__date=timezone.now().date())
+        expenses = Expense.objects.filter(date__date=timezone.now().date())
 
     total_purchases = 0
     total_expenses = 0
@@ -161,7 +161,7 @@ def history(request, year=None, month=None, day=None, drug=None):
     net_total = total_purchases - total_expenses
 
     last_sales = 0
-    for a in purchases.filter(date__gt=timezone.now() - datetime.timedelta(days=7)):
+    for a in Purchase.objects.filter(date__gt=timezone.now() - datetime.timedelta(days=7)):
         last_sales += a.total_amount
 
     return render(
